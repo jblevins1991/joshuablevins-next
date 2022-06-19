@@ -31,8 +31,12 @@ const Header: React.FC<HeaderProps> = ({
             <ul>
             {
                 navItems.map(navItem => {
+                    const isCurrent = navItem.uri === "/"
+                        ? router.pathname === "/"
+                        : router.pathname.substring(1).startsWith(navItem.uri.substring(1));
+
                     return <li
-                        aria-current={navItem.uri === router.pathname}
+                        aria-current={isCurrent}
                         aria-label={navItem.a11yLabel}
                         className={'navigation-item'}
                         key={navItem.label}
