@@ -4,7 +4,9 @@ import Image from 'next/image';
 import {useRouter} from "next/router";
 
 export interface HeaderProps {
+    isDrawerOpen: boolean;
     navItems: NavigationItem[];
+    setIsDrawerOpen: () => void;
 }
 
 export interface NavigationItem {
@@ -14,7 +16,9 @@ export interface NavigationItem {
 }
 
 const Header: React.FC<HeaderProps> = ({
+    isDrawerOpen,
     navItems,
+    setIsDrawerOpen,
 }) => {
     const router = useRouter();
 
@@ -41,6 +45,12 @@ const Header: React.FC<HeaderProps> = ({
             }
             </ul>
         </nav>
+
+        <button
+            onClick={setIsDrawerOpen}
+        >
+            Nav
+        </button>
     </header>
 };
 

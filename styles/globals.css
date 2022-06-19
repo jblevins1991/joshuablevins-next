@@ -20,9 +20,15 @@ body {
         @apply rounded-sm;
     }
 
+    header *:focus, header *:focus-visible {
+        @apply outline-black;
+        @apply border-black;
+    }
+
     main {
         @apply container;
         @apply mx-auto;
+        @apply mb-5;
     }
 
     h1, h2, h3, h4, p, a {
@@ -86,14 +92,14 @@ body {
     a:visited {}
 
     a:hover {
-        @apply text-indigo-600;
+        @apply text-indigo-200;
     }
 
     a:active {}
 
     header {
         @apply min-h-[60px];
-        @apply bg-indigo-600;
+        @apply bg-indigo-500;
     }
 
     header nav {
@@ -115,11 +121,12 @@ body {
 
         header nav ul li[aria-current=true] a {
             @apply font-bold;
-            @apply text-white;
+            @apply text-gray-900;
         }
 
         header nav ul li a {
-            @apply text-gray-300;
+            @apply text-xl;
+            @apply text-gray-900;
         }
 
         header nav ul li a:link {
@@ -128,7 +135,7 @@ body {
         header nav li a:visited {}
 
         header nav li a:hover {
-            @apply text-white;
+            @apply text-gray-900;
         }
 
         header nav li a:active {}
@@ -149,6 +156,10 @@ body {
         @apply shadow-xl;
     }
 
+    article:hover a {
+        @apply text-indigo-200;
+    }
+
     article h2 {
         @apply first-letter:uppercase;
         @apply tracking-tighter;
@@ -165,6 +176,8 @@ body {
     }
 
     article a {
+        @apply text-lg;
+        @apply font-bold;
         @apply block;
         @apply mb-1.5;
     }
@@ -179,19 +192,28 @@ body {
 
     .home-articles {
         @apply flex;
-        @apply flex-row;
+        @apply flex-col;
         @apply gap-1;
     }
 
+
+    @media screen and (min-width: 1024px) {
+        .home-articles {
+            @apply flex-row;
+        }
+    }
+
     .home-blog > a:last-child {
-        @apply text-lg;
+        @apply text-xl;
         @apply font-bold;
         @apply tracking-wide;
         @apply mb-2;
         @apply box-border;
         @apply block;
         @apply w-fit;
-        @apply bg-indigo-600;
+        @apply bg-indigo-500;
+        @apply text-gray-900;
+        @apply subpixel-antialiased;
         @apply p-3;
         @apply rounded-lg;
     }
@@ -202,7 +224,8 @@ body {
     }
 
     .home-blog > a:last-child:hover {
-        @apply text-white;
+        @apply bg-indigo-400;
+        @apply text-gray-900;
         @apply shadow-xl;
     }
 }

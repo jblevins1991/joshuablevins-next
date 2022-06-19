@@ -1,14 +1,22 @@
 import * as React from 'react';
 import Link from "next/link";
+import {useRouter} from "next/router";
+
 import {NavigationItem} from "./Header";
 
 export interface DrawerProps {
     navItems: NavigationItem[];
+    open: boolean;
 }
 
 const Drawer: React.FC<DrawerProps> = ({
     navItems,
+    open,
 }) => {
+    const location = useRouter();
+
+    if (!open) return null;
+
     return <nav className={'drawer'}>
         <ul>
         {
