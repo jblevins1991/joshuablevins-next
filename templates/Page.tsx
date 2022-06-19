@@ -5,6 +5,7 @@ import Head from 'next/head';
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import routes from "../routes";
+import Drawer from "../components/Drawer";
 
 export interface PageTemplateProps {
     canonicalUrl: string;
@@ -37,7 +38,13 @@ const PageTemplate: React.FC<PageTemplateProps> = ({
             <link rel='canonical' href={canonicalUrl} />
         </Head>
 
-        <Header navItems={routes} />
+        <Header
+            isDrawerOpen={isDrawerOpen}
+            navItems={routes}
+            setIsDrawerOpen={handleDrawerToggle}
+        />
+
+        <Drawer navItems={routes} open={isDrawerOpen} />
 
         { children }
 
