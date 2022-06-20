@@ -2,13 +2,13 @@ import * as React from 'react';
 import Page from "../../templates/Page";
 import {useRouter} from "next/router";
 import client from "../../client";
-import {PortableText} from "@portabletext/react";
+import PortableText from "react-portable-text";
 
 // @ts-ignore
 const PostPage = ({ post }) => {
     const router = useRouter();
 
-    console.log(post)
+    console.log(JSON.stringify(post[0].body, null, 2))
 
     return <Page
         title={post.title}
@@ -16,9 +16,16 @@ const PostPage = ({ post }) => {
         canonicalUrl={router.pathname}
     >
         <main>
-            <PortableText
-                value={post.body}
-            />
+            {post[0].body && <PortableText
+                serializers={{
+                    h1: ({children}: any) => <h1>{children}</h1>,
+                    h2: ({children}: any) => <h2>{children}</h2>,
+                    h3: ({children}: any) => <h3>{children}</h3>,
+                    h4: ({children}: any) => <h4>{children}</h4>,
+                    normal: ({children}: any) => <p>{children}</p>,
+                }}
+                content={post[0].body}
+            />}
         </main>
     </Page>;
 };
