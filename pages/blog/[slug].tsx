@@ -8,8 +8,6 @@ import PortableText from "react-portable-text";
 const PostPage = ({ post }) => {
     const router = useRouter();
 
-    console.log(JSON.stringify(post[0].body, null, 2))
-
     return <Page
         title={post.title}
         description={post.description}
