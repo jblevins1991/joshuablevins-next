@@ -1,4 +1,4 @@
 
 export const firstParagraphToExcerpt = (paragraph: string) => {
-    return paragraph.substring(0, 250);
+    return paragraph.substring(0, 300);
 }
