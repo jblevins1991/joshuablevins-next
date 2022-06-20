@@ -3,7 +3,6 @@ import PageTemplate from "../templates/Page";
 
 const AboutPage = () => {
     return <PageTemplate
-        canonicalUrl={'https://www.joshuablevins.net/about'}
         description={''}
         title={"About Me"}
     >

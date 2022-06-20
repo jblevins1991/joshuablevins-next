@@ -5,7 +5,6 @@ import PageTemplate from "../templates/Page";
 const NotFoundPage = () => {
   return (
       <PageTemplate
-          canonicalUrl={'https://www.joshuablevins.net/not-found'}
           description={''}
           title={'404 - Not Found'}
       >

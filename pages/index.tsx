@@ -9,7 +9,6 @@ import {firstParagraphToExcerpt} from "../utils/firstParagraphToExcerpt";
 // @ts-ignore
 const IndexPage = ({ posts }) => {
   return <PageTemplate
-    canonicalUrl={'https://www.joshuablevins.net/'}
     description={'Joshua Blevins - veteran react developer with special interests in web accessibility, user experience, and clean coding practices.'}
     title={'Home'}
   >

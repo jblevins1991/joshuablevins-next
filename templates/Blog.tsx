@@ -17,15 +17,9 @@ const BlogTemplate: React.FC<BlogTemplateProps> = ({
     description,
 }) => {
     return <PageTemplate
-        canonicalUrl={`https://www.joshuablevins.net/blog/${slug}`}
         description={description}
         title={title}
     >
-        <h1>{ title }</h1>
-
-        <small>
-            Published by {author}, on {publishedDate}.
-        </small>
     </PageTemplate>
 };
 
