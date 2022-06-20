@@ -8,7 +8,6 @@ import {firstParagraphToExcerpt} from "../../utils/firstParagraphToExcerpt";
 // @ts-ignore
 const BlogIndexPage = ({ posts }) => {
     return <Page
-        canonicalUrl={'https://www.joshuablevins.net/blog'}
         description={'Articles about React and application development.'}
         title={'Blog'}
     >
