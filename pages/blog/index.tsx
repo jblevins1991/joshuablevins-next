@@ -5,8 +5,7 @@ import client from "../../client";
 import ArticleCard from "../../components/ArticleCard";
 import {firstParagraphToExcerpt} from "../../utils/firstParagraphToExcerpt";
 
-// @ts-ignore
-const BlogIndexPage = ({ posts }) => {
+const BlogIndexPage = ({ posts }: any) => {
     return <Page
         description={'Articles about React and application development.'}
         title={'Blog'}

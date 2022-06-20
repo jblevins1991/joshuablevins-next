@@ -4,8 +4,7 @@ import PortableText from "react-portable-text";
 import Page from "../../templates/Page";
 import client from "../../client";
 
-// @ts-ignore
-const PostPage = ({ post: postProp }) => {
+const PostPage = ({ post: postProp }: any) => {
 
     const post = postProp[0];
 

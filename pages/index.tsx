@@ -6,8 +6,7 @@ import PageTemplate from "../templates/Page";
 import client from "../client";
 import {firstParagraphToExcerpt} from "../utils/firstParagraphToExcerpt";
 
-// @ts-ignore
-const IndexPage = ({ posts }) => {
+const IndexPage = ({ posts }: any) => {
   return <PageTemplate
     description={'Joshua Blevins - veteran react developer with special interests in web accessibility, user experience, and clean coding practices.'}
     title={'Home'}
