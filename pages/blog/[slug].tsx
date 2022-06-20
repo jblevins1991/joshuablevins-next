@@ -4,9 +4,10 @@ import PortableText from "react-portable-text";
 import Page from "../../templates/Page";
 import client from "../../client";
 
-const PostPage = ({ post: postProp }: any) => {
-
-    const post = postProp[0];
+const PostPage = ({ post }: any) => {
+    if (post === {}) {
+        return null;
+    }
 
     return <Page
         title={post.title}
@@ -55,7 +56,7 @@ export async function getStaticProps(context: any) {
 
     return {
         props: {
-            post
+            post: post[0] || {}
         }
     };
 }

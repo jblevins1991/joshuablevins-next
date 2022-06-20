@@ -31,12 +31,12 @@ const BlogIndexPage = ({ posts }: any) => {
 
 export async function getStaticProps(context: any) {
     const posts = await client.fetch(
-        `*[_type == "post"][1...3]`
+        `*[_type == "post"]`
     );
 
     return {
         props: {
-            posts
+            posts: posts || []
         }
     }
 }
