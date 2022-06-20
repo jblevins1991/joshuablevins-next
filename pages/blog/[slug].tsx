@@ -5,7 +5,7 @@ import Page from "../../templates/Page";
 import client from "../../client";
 
 const PostPage = ({ post }: any) => {
-    if (post === {}) {
+    if (!post) {
         return null;
     }
 
