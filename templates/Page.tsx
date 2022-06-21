@@ -35,7 +35,7 @@ const PageTemplate: React.FC<PageTemplateProps> = ({
             <meta charSet='utf-8' />
             <title>{ title }</title>
             <meta name={'description'} content={description} />
-            <link rel='canonical' href={`https://joshuablevins.net${router.pathname}`} />
+            <link rel='canonical' href={`${process.env.NEXT_HOSTNAME}${router.pathname}`} />
         </Head>
 
         <Header

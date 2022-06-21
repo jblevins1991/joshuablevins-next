@@ -26,16 +26,16 @@ const IndexPage = ({ posts }: any) => {
 
         <div className={'home-articles'}>
         {
-          posts.map((post: any) => {
-            const excerpt = firstParagraphToExcerpt(post.body[0].children[0].text);
+          posts && posts.map((post: any) => {
+              const excerpt = firstParagraphToExcerpt(post.body[0].children[0].text);
 
-            return <ArticleCard
-                key={post.title}
-                title={post.title}
-                description={excerpt}
-                slug={post.slug.current}
-            />;
-          })
+              return <ArticleCard
+                  key={post.title}
+                  title={post.title}
+                  description={excerpt}
+                  slug={post.slug.current}
+              />;
+            })
         }
         </div>
 
