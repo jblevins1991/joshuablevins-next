@@ -5,10 +5,8 @@ import client from "../../client";
 import ArticleCard from "../../components/ArticleCard";
 import {firstParagraphToExcerpt} from "../../utils/firstParagraphToExcerpt";
 
-// @ts-ignore
-const BlogIndexPage = ({ posts }) => {
+const BlogIndexPage = ({ posts }: any) => {
     return <Page
-        canonicalUrl={'https://www.joshuablevins.net/blog'}
         description={'Articles about React and application development.'}
         title={'Blog'}
     >
@@ -33,12 +31,12 @@ const BlogIndexPage = ({ posts }) => {
 
 export async function getStaticProps(context: any) {
     const posts = await client.fetch(
-        `*[_type == "post"][1...3]`
+        `*[_type == "post"]`
     );
 
     return {
         props: {
-            posts
+            posts: posts || []
         }
     }
 }

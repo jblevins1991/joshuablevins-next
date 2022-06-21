@@ -6,8 +6,7 @@ import PageTemplate from "../templates/Page";
 import client from "../client";
 import {firstParagraphToExcerpt} from "../utils/firstParagraphToExcerpt";
 
-// @ts-ignore
-const IndexPage = ({ posts }) => {
+const IndexPage = ({ posts }: any) => {
   return <PageTemplate
     description={'Joshua Blevins - veteran react developer with special interests in web accessibility, user experience, and clean coding practices.'}
     title={'Home'}
@@ -27,16 +26,16 @@ const IndexPage = ({ posts }) => {
 
         <div className={'home-articles'}>
         {
-          posts.map((post: any) => {
-            const excerpt = firstParagraphToExcerpt(post.body[0].children[0].text);
+          posts && posts.map((post: any) => {
+              const excerpt = firstParagraphToExcerpt(post.body[0].children[0].text);
 
-            return <ArticleCard
-                key={post.title}
-                title={post.title}
-                description={excerpt}
-                slug={post.slug.current}
-            />;
-          })
+              return <ArticleCard
+                  key={post.title}
+                  title={post.title}
+                  description={excerpt}
+                  slug={post.slug.current}
+              />;
+            })
         }
         </div>
 
@@ -58,7 +57,7 @@ export async function getStaticProps(context: any) {
 
   return {
     props: {
-      posts
+      posts: posts || []
     }
   }
 }
