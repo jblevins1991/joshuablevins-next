@@ -15,11 +15,6 @@ const AboutPage = () => {
                 specialize in web accessibility and test-driven development.
             </p>
 
-            <p>
-                When I am not writing code I am spending time with friends and
-                family. I also enjoy playing guitar going to concerts.
-            </p>
-
             <h2>Helpful Links</h2>
 
             {/*  @todo: add helpful links (github, acloudguru, linkedin, etc.)  */}
