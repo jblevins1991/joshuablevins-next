@@ -51,6 +51,7 @@ const Header: React.FC<HeaderProps> = ({
         </nav>
 
         <button
+            className={'hamburger-button'}
             onClick={setIsDrawerOpen}
         >
             Nav
