@@ -33,7 +33,7 @@ const IndexPage = ({ posts }: any) => {
               return <ArticleCard
                   key={post.title}
                   title={post.title}
-                  description={''}
+                  description={post?.body?.[0]?.children[0].text || ''}
                   slug={post.slug.current}
               />;
             })

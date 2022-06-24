@@ -20,8 +20,8 @@ function paginatePosts(
     pageNo: number,
     itemsPerPage: number
 ) {
-    const paginationStart = pageNo * itemsPerPage;
-    const paginationEnd = (pageNo + 1) * itemsPerPage + 1;
+    const paginationStart = (pageNo - 1) * itemsPerPage;
+    const paginationEnd = paginationStart + itemsPerPage;
 
     const paginatedPosts = posts.slice(
         paginationStart,
@@ -37,24 +37,19 @@ const POSTS_PER_PAGE = 3;
 const BlogIndexPage = ({ posts }: any) => {
     const { query } = useRouter();
 
-    // set to `page` query param or fallback to `1`
-    const [pageIndex, setPageIndex] = React.useState<number>(
-        Number(query.page) > 0
-            ? Number(query.page)
-            : 1
-    );
-
-    React.useEffect(() => {
-        setPageIndex(Number(query.page));
-    }, [
-        query.page
-    ])
+    const pageIndex = !!query.page && Number(query.page) > 0
+        ? Number(query.page)
+        : 1;
 
     const paginatedPosts = React.useMemo(() => {
         return paginatePosts(posts, pageIndex, POSTS_PER_PAGE);
     }, [
         pageIndex
     ]);
+
+    React.useEffect(() => {
+        console.log('page index: ', pageIndex);
+    }, [pageIndex]);
 
     const totalPages = Math.round(posts.length / POSTS_PER_PAGE);
 
@@ -67,7 +62,7 @@ const BlogIndexPage = ({ posts }: any) => {
 
             {
                 paginatedPosts.map((post: any) => {
-                    const excerpt = firstParagraphToExcerpt(post.body[0].children[0].text);
+                    const excerpt = firstParagraphToExcerpt(post?.body?.[0]?.children[0].text || '');
 
                     return <ArticleCard
                         key={post.title}
