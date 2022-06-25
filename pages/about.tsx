@@ -35,15 +35,21 @@ const AboutPage = () => {
 
                     <ul>
                         <li>HTML</li>
-                        <li>JavaScript</li>
-                        <li>Typescript</li>
-                        <li>React.js</li>
-                        <li>React Spring</li>
-                        <li>React Testing Library</li>
-                        <li>Next.js</li>
                         <li>CSS</li>
                         <li>Sass</li>
                         <li>Tailwind CSS</li>
+                        <li>JavaScript</li>
+                        <li>Typescript</li>
+                        <li>React.js</li>
+                        <li>Styled Components</li>
+                        <li>React Spring</li>
+                        <li>Next.js</li>
+                        <li>Gatsby</li>
+                        <li>React Testing Library</li>
+                        <li>Mock Service Worker</li>
+                        <li>User Event</li>
+                        <li>Cypress</li>
+                        <li>Playwright</li>
                         <li>Express.js</li>
                         <li>Mongoose/MongoDB</li>
                         <li>MySQL</li>
