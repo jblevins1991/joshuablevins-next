@@ -6,11 +6,13 @@ import {NavigationItem} from "./Header";
 
 export interface DrawerProps {
     navItems: NavigationItem[];
+    setOpen: React.Dispatch<boolean>;
     open: boolean;
 }
 
 const Drawer: React.FC<DrawerProps> = ({
     navItems,
+    setOpen,
     open,
 }) => {
     const location = useRouter();
@@ -18,6 +20,9 @@ const Drawer: React.FC<DrawerProps> = ({
     if (!open) return null;
 
     return <nav className={'drawer'}>
+        <button onClick={() => setOpen(false)}>
+            Close
+        </button>
         <ul>
         {
             navItems.map(navItem => {
