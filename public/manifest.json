@@ -1,0 +1,12 @@
+{
+  "name": "Joshua Blevins Web Dev Blog",
+  "short_name": "",
+  "theme_color": "",
+  "background_color": "",
+  "display": "fullscreen",
+  "orientation": "portrait",
+  "scope": "/",
+  "start_url": "/",
+  "icons": [],
+  "splash_pages": null
+}
