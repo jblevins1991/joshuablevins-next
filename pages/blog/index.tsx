@@ -91,6 +91,8 @@ export async function getStaticProps(context: any) {
         `*[_type == "post"]`
     );
 
+    console.log(JSON.stringify(posts, null, 2));
+
     return {
         props: {
             posts: posts || []
