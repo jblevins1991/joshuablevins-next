@@ -27,12 +27,13 @@ const IndexPage = ({ posts }: any) => {
         <div className={'home-articles'}>
         {
           posts && posts.map((post: any) => {
-              const excerpt = firstParagraphToExcerpt(post.body[0].children[0].text);
+            console.log('post: ', post)
+              // const excerpt = firstParagraphToExcerpt(post.body[0].children[0].text);
 
               return <ArticleCard
                   key={post.title}
                   title={post.title}
-                  description={excerpt}
+                  description={post?.body?.[0]?.children[0].text || ''}
                   slug={post.slug.current}
               />;
             })
@@ -52,7 +53,7 @@ const IndexPage = ({ posts }: any) => {
 
 export async function getStaticProps(context: any) {
   const posts = await client.fetch(
-      `*[_type == "post"]`
+      `*[_type == "post"][0...3]`
   );
 
   return {
