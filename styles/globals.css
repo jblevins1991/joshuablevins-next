@@ -203,6 +203,10 @@ body {
         @apply left-0;
     }
 
+    .drawer button span {
+        @apply text-primaryHover;
+    }
+
     .drawer ul li {
         @apply list-none;
         @apply m-0;

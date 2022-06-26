@@ -3,6 +3,7 @@ import Link from "next/link";
 import {useRouter} from "next/router";
 
 import {NavigationItem} from "./Header";
+import Image from "next/image";
 
 export interface DrawerProps {
     navItems: NavigationItem[];
@@ -21,7 +22,12 @@ const Drawer: React.FC<DrawerProps> = ({
 
     return <nav className={'drawer'}>
         <button onClick={() => setOpen(false)}>
-            Close
+            <Image
+                aria-label={'Close Mobile Navigation Icon'}
+                height={40}
+                src={'/iconmonstr-x-mark-lined.svg'}
+                width={40}
+            />
         </button>
         <ul>
         {
