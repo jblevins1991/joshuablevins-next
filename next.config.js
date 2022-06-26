@@ -4,6 +4,28 @@ const nextConfig = {
     locales: ["en"],
     defaultLocale: "en",
   },
+  webpack(config) {
+    config.module.rules.push({
+      test: /\.svg$/i,
+      use: [
+        {
+          loader: '@svgr/webpack',
+          options: {
+            prettier: false,
+            svgo: true,
+            svgoConfig: {
+              plugins: [{
+                removeViewBox: false
+              }]
+            },
+            titleProp: true
+          }
+        }
+      ]
+    });
+
+    return config;
+  },
   env: {
     NEXT_HOSTNAME: process.env.NEXT_HOSTNAME,
     SANITY_PROJECT_ID: process.env.SANITY_PROJECT_ID,

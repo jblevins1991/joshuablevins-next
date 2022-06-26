@@ -54,7 +54,12 @@ const Header: React.FC<HeaderProps> = ({
             className={'hamburger-button'}
             onClick={setIsDrawerOpen}
         >
-            Nav
+            <Image
+                aria-label={'Mobile Navigation Icon'}
+                height={40}
+                src={'/iconmonstr-menu-lined.svg'}
+                width={40}
+            />
         </button>
     </header>
 };
