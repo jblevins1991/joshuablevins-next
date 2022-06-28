@@ -2,6 +2,7 @@ import * as React from 'react';
 
 import Head from 'next/head';
 import {useRouter} from "next/router";
+import {useSpring} from "@react-spring/core";
 
 import Header from "../components/Header";
 import Footer from "../components/Footer";
@@ -27,10 +28,6 @@ const PageTemplate: React.FC<PageTemplateProps> = ({
         setIsDrawerOpen(!isDrawerOpen);
     }
 
-    const handleDrawerClose = () => {
-        setIsDrawerOpen(false);
-    }
-
     return <>
         <Head>
             <meta charSet='utf-8' />
@@ -45,7 +42,11 @@ const PageTemplate: React.FC<PageTemplateProps> = ({
             setIsDrawerOpen={handleDrawerToggle}
         />
 
-        <Drawer navItems={routes} open={isDrawerOpen} />
+        <Drawer
+            navItems={routes}
+            setOpen={setIsDrawerOpen}
+            open={isDrawerOpen}
+        />
 
         { children }
 
