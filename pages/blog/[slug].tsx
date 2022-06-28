@@ -65,9 +65,9 @@ const PostPage = ({ post }: any) => {
             {body && <>
                 <h1>{ title }</h1>
 
-                <small>
+                {author && publishedAt && <small>
                     Published by {name}, on {publishedAt}.
-                </small>
+                </small>}
 
                 <figure>
                     <Image
@@ -87,14 +87,14 @@ const PostPage = ({ post }: any) => {
                 />
             </>}
 
-            <section>
-                <h2>{ name }</h2>
+            {author && <section>
+                <h2>{name}</h2>
 
                 <PortableText
                     content={bio}
                     serializers={serializers}
                 />
-            </section>
+            </section>}
         </main>
     </Page>;
 };
