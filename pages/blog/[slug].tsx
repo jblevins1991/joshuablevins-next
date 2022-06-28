@@ -31,14 +31,14 @@ const PostPage = ({ post }: any) => {
     };
 
     return <Page
-        title={post.relatedUrl.meta.title || post.title}
-        description={post.relatedUrl.meta.description || ''}
-        canonicalUrl={post.relatedUrl.url || ''}
+        title={post?.relatedUrl?.meta.title || post.title}
+        description={post?.relatedUrl?.meta.description || ''}
+        canonicalUrl={post?.relatedUrl?.url || ''}
     >
         <main>
             <h1>{ post.title }</h1>
 
-            {post.author && post.publishedAt && <small>
+            {!!post.author && post.publishedAt && <small>
                 Published by {post.author.name}, on {post.publishedAt}.
             </small>}
 
