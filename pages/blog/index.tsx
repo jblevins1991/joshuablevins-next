@@ -47,10 +47,6 @@ const BlogIndexPage = ({ posts }: any) => {
         pageIndex
     ]);
 
-    React.useEffect(() => {
-        console.log('page index: ', pageIndex);
-    }, [pageIndex]);
-
     const totalPages = Math.round(posts.length / POSTS_PER_PAGE);
 
     return <Page
@@ -110,8 +106,6 @@ export async function getStaticProps(context: any) {
             body
         }`
     );
-
-    console.log(posts[0].categories);
 
     return {
         props: {
