@@ -6,25 +6,6 @@ import client from "../../client";
 import Image from "next/image";
 
 const PostPage = ({ post }: any) => {
-    const {
-        body,
-        publishedAt,
-        relatedUrl,
-        thumbnail,
-        title,
-    } = post;
-
-    const {
-        metadata: {
-            dimensions: {
-                height,
-                width
-            }
-        }
-    } = thumbnail;
-
-    const { meta } = relatedUrl;
-
     if (!post) {
         return null;
     }
@@ -50,31 +31,31 @@ const PostPage = ({ post }: any) => {
     };
 
     return <Page
-        title={meta.title}
-        description={meta.description}
-        canonicalUrl={relatedUrl.url}
+        title={post.relatedUrl.meta.title || post.title}
+        description={post.relatedUrl.meta.description || ''}
+        canonicalUrl={post.relatedUrl.url || ''}
     >
         <main>
-            <h1>{ title }</h1>
+            <h1>{ post.title }</h1>
 
-            {post.author && publishedAt && <small>
-                Published by {post.author.name}, on {publishedAt}.
+            {post.author && post.publishedAt && <small>
+                Published by {post.author.name}, on {post.publishedAt}.
             </small>}
 
-            {thumbnail && <figure>
+            {!!post.thumbnail && <figure>
                 <Image
-                    alt={title}
-                    src={thumbnail.url}
-                    height={height}
-                    width={width}
+                    alt={post.title}
+                    src={post.thumbnail.url}
+                    height={post.thumbnail.metadata.dimensions.height}
+                    width={post.thumbnail.metadata.dimensions.width}
                 />
 
                 <figcaption>
                 </figcaption>
             </figure>}
 
-            {body && <PortableText
-                content={body}
+            {post.body && <PortableText
+                content={post.body}
                 serializers={serializers}
             />}
 
