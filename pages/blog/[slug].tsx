@@ -7,7 +7,6 @@ import Image from "next/image";
 
 const PostPage = ({ post }: any) => {
     const {
-        author,
         body,
         publishedAt,
         relatedUrl,
@@ -58,8 +57,8 @@ const PostPage = ({ post }: any) => {
         <main>
             <h1>{ title }</h1>
 
-            {author && publishedAt && <small>
-                Published by {author.name}, on {publishedAt}.
+            {post.author && publishedAt && <small>
+                Published by {post.author.name}, on {publishedAt}.
             </small>}
 
             {thumbnail && <figure>
@@ -79,11 +78,11 @@ const PostPage = ({ post }: any) => {
                 serializers={serializers}
             />}
 
-            {author && <section>
-                <h2>{author.name}</h2>
+            {post.author && <section>
+                <h2>{post.author.name}</h2>
 
-                {author.bio && <PortableText
-                    content={author.bio}
+                {post.author.bio && <PortableText
+                    content={post.author.bio}
                     serializers={serializers}
                 />}
             </section>}
