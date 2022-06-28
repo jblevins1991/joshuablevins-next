@@ -24,12 +24,6 @@ const PostPage = ({ post }: any) => {
         }
     } = thumbnail;
 
-    const {
-        name,
-        bio,
-        slug
-    } = author;
-
     const { meta } = relatedUrl;
 
     if (!post) {
@@ -62,38 +56,36 @@ const PostPage = ({ post }: any) => {
         canonicalUrl={relatedUrl.url}
     >
         <main>
-            {body && <>
-                <h1>{ title }</h1>
+            <h1>{ title }</h1>
 
-                {author && publishedAt && <small>
-                    Published by {name}, on {publishedAt}.
-                </small>}
+            {author && publishedAt && <small>
+                Published by {author.name}, on {publishedAt}.
+            </small>}
 
-                <figure>
-                    <Image
-                        alt={title}
-                        src={thumbnail.url}
-                        height={height}
-                        width={width}
-                    />
-
-                    <figcaption>
-                    </figcaption>
-                </figure>
-
-                <PortableText
-                    content={body}
-                    serializers={serializers}
+            {thumbnail && <figure>
+                <Image
+                    alt={title}
+                    src={thumbnail.url}
+                    height={height}
+                    width={width}
                 />
-            </>}
+
+                <figcaption>
+                </figcaption>
+            </figure>}
+
+            {body && <PortableText
+                content={body}
+                serializers={serializers}
+            />}
 
             {author && <section>
-                <h2>{name}</h2>
+                <h2>{author.name}</h2>
 
-                <PortableText
-                    content={bio}
+                {author.bio && <PortableText
+                    content={author.bio}
                     serializers={serializers}
-                />
+                />}
             </section>}
         </main>
     </Page>;
