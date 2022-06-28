@@ -5,6 +5,7 @@ const AboutPage = () => {
     return <PageTemplate
         description={''}
         title={"About Me"}
+        canonicalUrl={`${process.env.NEXT_HOSTNAME}/about`}
     >
         <main>
             <div className={'root-container'}>
@@ -45,6 +46,8 @@ const AboutPage = () => {
                         <li>React Spring</li>
                         <li>Next.js</li>
                         <li>Gatsby</li>
+                        <li>Webpack</li>
+                        <li>Rollup</li>
                         <li>React Testing Library</li>
                         <li>Mock Service Worker</li>
                         <li>User Event</li>

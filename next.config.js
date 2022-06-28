@@ -4,27 +4,8 @@ const nextConfig = {
     locales: ["en"],
     defaultLocale: "en",
   },
-  webpack(config) {
-    config.module.rules.push({
-      test: /\.svg$/i,
-      use: [
-        {
-          loader: '@svgr/webpack',
-          options: {
-            prettier: false,
-            svgo: true,
-            svgoConfig: {
-              plugins: [{
-                removeViewBox: false
-              }]
-            },
-            titleProp: true
-          }
-        }
-      ]
-    });
-
-    return config;
+  images: {
+    domains: ['cdn.sanity.io'],
   },
   env: {
     NEXT_HOSTNAME: process.env.NEXT_HOSTNAME,

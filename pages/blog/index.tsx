@@ -56,6 +56,7 @@ const BlogIndexPage = ({ posts }: any) => {
     return <Page
         description={'Articles about React and application development.'}
         title={'Blog'}
+        canonicalUrl={`${process.env.NEXT_HOSTNAME}/blog`}
     >
         <main>
             <h1>Blog</h1>
