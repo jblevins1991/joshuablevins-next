@@ -10,6 +10,7 @@ const IndexPage = ({ posts }: any) => {
   return <PageTemplate
     description={'Joshua Blevins - veteran react developer with special interests in web accessibility, user experience, and clean coding practices.'}
     title={'Home'}
+    canonicalUrl={String(process.env.NEXT_HOSTNAME)}
   >
     <main>
       <section>

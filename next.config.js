@@ -4,6 +4,9 @@ const nextConfig = {
     locales: ["en"],
     defaultLocale: "en",
   },
+  images: {
+    domains: ['cdn.sanity.io'],
+  },
   env: {
     NEXT_HOSTNAME: process.env.NEXT_HOSTNAME,
     SANITY_PROJECT_ID: process.env.SANITY_PROJECT_ID,

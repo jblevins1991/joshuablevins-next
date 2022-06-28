@@ -9,17 +9,18 @@ import Drawer from "../components/Drawer";
 import routes from "../routes";
 
 export interface PageTemplateProps {
+    canonicalUrl: string;
     children: React.ReactNode;
     description: string;
     title: string;
 }
 
 const PageTemplate: React.FC<PageTemplateProps> = ({
+    canonicalUrl,
     children,
     description,
     title,
 }) => {
-    const router = useRouter();
     const [isDrawerOpen, setIsDrawerOpen] = React.useState(false);
 
     const handleDrawerToggle = () => {
@@ -35,7 +36,7 @@ const PageTemplate: React.FC<PageTemplateProps> = ({
             <meta charSet='utf-8' />
             <title>{ title }</title>
             <meta name={'description'} content={description} />
-            <link rel='canonical' href={`${process.env.NEXT_HOSTNAME}${router.pathname}`} />
+            <link rel='canonical' href={canonicalUrl} />
         </Head>
 
         <Header

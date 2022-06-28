@@ -5,6 +5,7 @@ const AboutPage = () => {
     return <PageTemplate
         description={''}
         title={"About Me"}
+        canonicalUrl={`${process.env.NEXT_HOSTNAME}/about`}
     >
         <main>
             <div className={'root-container'}>

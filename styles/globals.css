@@ -59,7 +59,7 @@ body {
         }
     }
 
-    h1, h2, h3, h4, p, a {
+    h1, h2, h3, h4, p, a, small {
         @apply text-textOnCanvas;
         @apply font-sans;
         @apply subpixel-antialiased;
@@ -99,6 +99,14 @@ body {
         @apply font-light;
         @apply tracking-tight;
         @apply mb-2;
+    }
+
+    small {
+        @apply block;
+        @apply text-base;
+        @apply font-light;
+        @apply tracking-wide;
+        @apply mb-4;
     }
 
     p b {}
