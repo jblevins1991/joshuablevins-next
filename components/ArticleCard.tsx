@@ -23,13 +23,6 @@ const ArticleCard: React.FC<ArticleCardProps> = ({
             <p>
                 { description }
             </p>
-
-            <Link
-                aria-label={`Read about ${title.toLowerCase()}`}
-                href={`/blog/${slug}`}
-            >
-                Read more
-            </Link>
         </article>
     </Link>;
 };

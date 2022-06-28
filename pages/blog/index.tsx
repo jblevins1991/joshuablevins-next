@@ -1,12 +1,12 @@
 import * as React from 'react';
+import {useRouter} from "next/router";
 import Link from "next/link";
 
 import Page from "../../templates/Page";
 import ArticleCard from "../../components/ArticleCard";
+import client from "../../client";
 import {firstParagraphToExcerpt} from "../../utils/firstParagraphToExcerpt";
 
-import client from "../../client";
-import {useRouter} from "next/router";
 
 /**
  * 1-based pagination that slices the currently desired posts from the array of posts.
@@ -31,26 +31,52 @@ function paginatePosts(
     return paginatedPosts;
 }
 
-// POSTS_PER_PAGE constant controlls how many posts each page will render
+// POSTS_PER_PAGE constant controls how many posts each page will render
 const POSTS_PER_PAGE = 3;
 
 const BlogIndexPage = ({ posts }: any) => {
     const { query } = useRouter();
 
-    const pageIndex = !!query.page && Number(query.page) > 0
-        ? Number(query.page)
-        : 1;
+    /**
+     * Memoized the pageIndex as it depends on the router's query object.
+     *
+     * This helps reduce unnecessary re-calculation of the user's current
+     * page. It only changes when query.page is changed.
+     */
+    const pageIndex = React.useMemo(() => {
+        return !!query.page && Number(query.page) > 0
+            ? Number(query.page)
+            : 1
+    }, [
+        query.page
+    ]);
 
+    /**
+     * Memoized the paginated posts so that they only re-calculate when the
+     * pageIndex state variable changes.
+     *
+     * This state variable only changes when the `Next Posts` or `Prev Posts`
+     * link is clicked.
+     */
     const paginatedPosts = React.useMemo(() => {
         return paginatePosts(posts, pageIndex, POSTS_PER_PAGE);
     }, [
         pageIndex
     ]);
 
-    const totalPages = Math.round(posts.length / POSTS_PER_PAGE);
+    /**
+     * Memoized totalPages with an empty dependency array to only calculate
+     * on the first render and not subsequent renders.
+     *
+     * This is to reduce the amount of calculations per re-render and leave
+     * room for implementation of dynamic postsPerPage feature.
+     */
+    const totalPages = React.useMemo(() => {
+        return Math.round(posts.length / POSTS_PER_PAGE);
+    }, []);
 
     return <Page
-        description={'Articles about React and application development.'}
+        description={'Articles about React, application development, and happiness advice in the tech industry.'}
         title={'Blog'}
         canonicalUrl={`${process.env.NEXT_HOSTNAME}/blog`}
     >
@@ -84,6 +110,9 @@ const BlogIndexPage = ({ posts }: any) => {
 };
 
 export async function getStaticProps(context: any) {
+    /**
+     Fetch details for all blog posts and their categories with count.
+     */
     const posts = await client.fetch(
         `*[_type == "post"]{relatedUrl,
             slug,

@@ -3,8 +3,8 @@ import PageTemplate from "../templates/Page";
 
 const AboutPage = () => {
     return <PageTemplate
-        description={''}
-        title={"About Me"}
+        description={'Learn about what makes Joshua Blevins tick professionally.'}
+        title={"About Joshua Blevins"}
         canonicalUrl={`${process.env.NEXT_HOSTNAME}/about`}
     >
         <main>
@@ -25,9 +25,19 @@ const AboutPage = () => {
                     </p>
 
                     <p>
+                        I have been on a large variety of projects throughout my career. This
+                        includes greenfield web applications, matured web applications, node.js
+                        module libraries, and full-stack projects. I have had the pleasure of
+                        taking responsibility and ownership of entire features during this time,
+                        including analytics data layer implementation, performance testing and
+                        monitoring, search-engine optimization, web accessibility, and business
+                        logic.
+                    </p>
+
+                    <p>
                         {/* eslint-disable-next-line react/no-unescaped-entities */}
-                        This blog's code is even open source. You can find it and all of my other
-                        projects in my GitHub account.
+                        This blog's <a href={'https://github.com/jblevins1991/joshuablevins-next'}>frontend </a>
+                        and <a href={''}>backend</a> code is open-source under the GPT-3 license.
                     </p>
                 </main>
 
@@ -46,11 +56,12 @@ const AboutPage = () => {
                         <li>React Spring</li>
                         <li>Next.js</li>
                         <li>Gatsby</li>
+                        <li>Redux (Thunk and Sagas)</li>
                         <li>Webpack</li>
                         <li>Rollup</li>
                         <li>React Testing Library</li>
-                        <li>Mock Service Worker</li>
                         <li>User Event</li>
+                        <li>Mock Service Worker</li>
                         <li>Cypress</li>
                         <li>Playwright</li>
                         <li>Express.js</li>
