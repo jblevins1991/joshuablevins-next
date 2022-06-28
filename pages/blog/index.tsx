@@ -89,12 +89,33 @@ const BlogIndexPage = ({ posts }: any) => {
 
 export async function getStaticProps(context: any) {
     const posts = await client.fetch(
-        `*[_type == "post"]`
+        `*[_type == "post"]{relatedUrl,
+            slug,
+            title,
+            "thumbnail": mainImage.asset->{
+                extension,
+                metadata,
+                mimeType,
+                url,
+                sha1hash,
+            },
+            _createdAt,
+            publishedAt,
+            _updatedAt,
+            categories[]->{
+                _id,
+                title,
+                "count": count(*[_type == "post" && ^.title in categories[]->title])
+            },
+            body
+        }`
     );
+
+    console.log(posts[0].categories);
 
     return {
         props: {
-            posts: posts || []
+            posts: posts || [],
         }
     }
 }
