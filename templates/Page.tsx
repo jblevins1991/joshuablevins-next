@@ -22,11 +22,16 @@ const PageTemplate: React.FC<PageTemplateProps> = ({
     description,
     title,
 }) => {
+    const router = useRouter();
     const [isDrawerOpen, setIsDrawerOpen] = React.useState(false);
 
     const handleDrawerToggle = () => {
         setIsDrawerOpen(!isDrawerOpen);
     }
+
+    const routeParts = router.pathname !== '/'
+        ? router.pathname.split('/')
+        : [];
 
     return <>
         <Head>
@@ -41,6 +46,39 @@ const PageTemplate: React.FC<PageTemplateProps> = ({
             navItems={routes}
             setIsDrawerOpen={handleDrawerToggle}
         />
+
+        <div className={'breadcrumb-wrapper'}>
+            <ol className={'breadcrumbs'}>
+            {
+                routeParts !== [ '', '' ] && routeParts.map((pathPart, index) => {
+                    if (pathPart === '') {
+                        return <li key={index}>
+                            <a href={'/'}>
+                                Home
+                            </a>
+                        </li>;
+                    }
+
+                    const capitalizedPathPart = pathPart[0].toUpperCase() + pathPart.substring(1);
+                    const capitalizedSlug = router.query?.slug && (router.query.slug as string)?.substring
+                        ? router.query.slug[0].toUpperCase() + (router.query.slug as string).substring(1)
+                        : '';
+
+                    if (index === router.pathname.split('/').length - 1) {
+                        return <li key={index}>
+                            { capitalizedSlug.replace('-', ' ') || capitalizedPathPart }
+                        </li>
+                    }
+
+                    return <li key={index}>
+                        <a href={`/${pathPart}`}>
+                            { capitalizedPathPart }
+                        </a>
+                    </li>
+                })
+            }
+            </ol>
+        </div>
 
         <Drawer
             navItems={routes}

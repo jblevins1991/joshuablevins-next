@@ -150,7 +150,7 @@ body {
         @apply justify-between;
         @apply items-end;
         @apply min-h-[60px];
-        @apply bg-primaryEnabled;
+        @apply bg-uiCanvas;
     }
 
     header nav {
@@ -178,12 +178,16 @@ body {
 
         header nav ul li[aria-current=true] a {
             @apply font-bold;
-            @apply text-gray-900;
+            @apply text-primaryEnabled;
+            @apply border-b-primaryEnabled;
+            @apply border-b-2;
+            @apply border-solid;
+            @apply pb-2;
         }
 
         header nav ul li a {
             @apply text-xl;
-            @apply text-textOnPrimary;
+            @apply text-textOnCanvas;
         }
 
         header nav ul li a:link {
@@ -192,7 +196,7 @@ body {
         header nav li a:visited {}
 
         header nav li a:hover {
-            @apply text-textOnPrimary;
+            @apply text-textOnCanvas;
         }
 
         header nav li a:active {}
@@ -222,12 +226,54 @@ body {
     }
 
     .drawer ul li a {
-        @apply text-primaryEnabled;
+        @apply text-textOnCanvas;
     }
 
     .drawer ul li[aria-current="true"] a {
-        @apply text-primaryHover;
+        @apply text-primaryEnabled;
         @apply font-bold;
+        @apply border-b-primaryEnabled;
+        @apply border-b-2;
+        @apply border-solid;
+        @apply pb-2;
+    }
+
+    .breadcrumb-wrapper {
+        @apply container;
+        @apply mx-3;
+        @apply py-3;
+    }
+
+    @media screen and (min-width: 1024px) {
+        .breadcrumb-wrapper {
+            @apply mx-auto;
+        }
+    }
+
+    .breadcrumbs {
+        @apply flex;
+        @apply flex-row;
+    }
+
+    .breadcrumbs li {
+        @apply text-textOnCanvas;
+    }
+
+    .breadcrumbs li:before {
+        content: "/";
+        @apply px-3;
+    }
+
+    .breadcrumbs li:first-child:before {
+        content: "";
+        @apply px-0;
+    }
+
+    .breadcrumbs li a {
+        @apply text-base;
+        @apply ml-0;
+        @apply underline;
+        @apply text-primaryEnabled;
     }
 
     article {
