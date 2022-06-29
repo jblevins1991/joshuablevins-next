@@ -14,23 +14,17 @@ const ArticleCard: React.FC<ArticleCardProps> = ({
     slug,
 }) => {
     return <Link
-        aria-label={`Read about ${title.toLowerCase()}`}
         href={`/blog/${slug}`}
     >
-        <article className={clsx('article', 'card')}>
-            <h2>{ title }</h2>
+        <a className={'article-link'} aria-label={`Read about ${title.toLowerCase()}`}>
+            <article className={clsx('article', 'card')}>
+                <h2>{ title }</h2>
 
-            <p>
-                { description }
-            </p>
-
-            <Link
-                aria-label={`Read about ${title.toLowerCase()}`}
-                href={`/blog/${slug}`}
-            >
-                Read more
-            </Link>
-        </article>
+                <p>
+                    { description }
+                </p>
+            </article>
+        </a>
     </Link>;
 };
 

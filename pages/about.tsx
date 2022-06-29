@@ -3,7 +3,7 @@ import PageTemplate from "../templates/Page";
 
 const AboutPage = () => {
     return <PageTemplate
-        description={''}
+        description={'I am a web application developer based out of Michigan. I have a permanent student mentality in that I am always honing my craft. I specialize in web accessibility and test-driven development.'}
         title={"About Me"}
         canonicalUrl={`${process.env.NEXT_HOSTNAME}/about`}
     >
@@ -61,13 +61,6 @@ const AboutPage = () => {
                     </ul>
                 </aside>
             </div>
-
-            {/*  @todo: add helpful links (github, acloudguru, linkedin, etc.)  */}
-            <button onClick={() => {
-                throw new Error("Sentry Frontend Error")
-            }}>
-                Throw error
-            </button>
         </main>
     </PageTemplate>;
 }
