@@ -77,7 +77,7 @@ const BlogIndexPage = ({ posts }: any) => {
 
     return <Page
         description={'Articles about React, application development, and happiness advice in the tech industry.'}
-        title={'Blog'}
+        title={"Josh's Web Dev Blog"}
         canonicalUrl={`${process.env.NEXT_HOSTNAME}/blog`}
     >
         <main>
@@ -85,12 +85,10 @@ const BlogIndexPage = ({ posts }: any) => {
 
             {
                 paginatedPosts.map((post: any) => {
-                    const excerpt = firstParagraphToExcerpt(post?.body?.[0]?.children[0].text || '');
-
                     return <ArticleCard
                         key={post.title}
                         title={post.title}
-                        description={excerpt}
+                        description={post?.body?.[0]?.children[0].text || ''}
                         slug={post.slug.current}
                     />;
                 })
