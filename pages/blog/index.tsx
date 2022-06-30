@@ -85,12 +85,10 @@ const BlogIndexPage = ({ posts }: any) => {
 
             {
                 paginatedPosts.map((post: any) => {
-                    const excerpt = firstParagraphToExcerpt(post?.body?.[0]?.children[0].text || '');
-
                     return <ArticleCard
                         key={post.title}
                         title={post.title}
-                        description={excerpt}
+                        description={post?.body?.[0]?.children[0].text || ''}
                         slug={post.slug.current}
                     />;
                 })
