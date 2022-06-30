@@ -72,13 +72,6 @@ const AboutPage = () => {
                     </ul>
                 </aside>
             </div>
-
-            {/*  @todo: add helpful links (github, acloudguru, linkedin, etc.)  */}
-            <button onClick={() => {
-                throw new Error("Sentry Frontend Error")
-            }}>
-                Throw error
-            </button>
         </main>
     </PageTemplate>;
 }

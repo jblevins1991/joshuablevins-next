@@ -123,7 +123,7 @@ body {
         @apply text-primaryEnabled;
         @apply border-none;
         @apply outline-none;
-        @apply mb-4;
+        @apply m-0;
     }
 
     a:link {}
@@ -150,7 +150,7 @@ body {
         @apply justify-between;
         @apply items-end;
         @apply min-h-[60px];
-        @apply bg-primaryEnabled;
+        @apply bg-uiCanvas;
     }
 
     header nav {
@@ -178,12 +178,16 @@ body {
 
         header nav ul li[aria-current=true] a {
             @apply font-bold;
-            @apply text-gray-900;
+            @apply text-primaryEnabled;
+            @apply border-b-primaryEnabled;
+            @apply border-b-2;
+            @apply border-solid;
+            @apply pb-2;
         }
 
         header nav ul li a {
             @apply text-xl;
-            @apply text-textOnPrimary;
+            @apply text-textOnCanvas;
         }
 
         header nav ul li a:link {
@@ -192,7 +196,7 @@ body {
         header nav li a:visited {}
 
         header nav li a:hover {
-            @apply text-textOnPrimary;
+            @apply text-textOnCanvas;
         }
 
         header nav li a:active {}
@@ -222,19 +226,64 @@ body {
     }
 
     .drawer ul li a {
-        @apply text-primaryEnabled;
+        @apply text-textOnCanvas;
     }
 
     .drawer ul li[aria-current="true"] a {
-        @apply text-primaryHover;
+        @apply text-primaryEnabled;
         @apply font-bold;
+        @apply border-b-primaryEnabled;
+        @apply border-b-2;
+        @apply border-solid;
+        @apply pb-2;
     }
 
-    article {
+    .breadcrumb-wrapper {
+        @apply container;
+        @apply mx-3;
+        @apply py-3;
+    }
+
+    @media screen and (min-width: 1024px) {
+        .breadcrumb-wrapper {
+            @apply mx-auto;
+        }
+    }
+
+    .breadcrumbs {
+        @apply flex;
+        @apply flex-row;
+    }
+
+    .breadcrumbs li {
+        @apply text-lg;
+        @apply text-textOnCanvas;
+    }
+
+    .breadcrumbs li:before {
+        content: "/";
+        @apply px-3;
+    }
+
+    .breadcrumbs li:first-child:before {
+        content: "";
+        @apply px-0;
+    }
+
+    .breadcrumbs li a {
+        @apply text-lg;
+        @apply ml-0;
+        @apply underline;
+        @apply text-primaryEnabled;
+    }
+
+    .article-link {
         @apply flex-1;
         @apply box-border;
         @apply p-2;
-        @apply m-2;
+    }
+
+    .article-link article {
         @apply rounded-lg;
         @apply border;
         @apply bg-uiMaterial;
@@ -242,33 +291,23 @@ body {
         @apply hover:cursor-pointer;
     }
 
-    article:hover {
+    .article-link article:hover {
         @apply bg-uiMaterialHover;
     }
 
-    article:hover a {
-    }
-
-    article h2 {
+    .article-link article h2 {
         @apply first-letter:uppercase;
         @apply tracking-tighter;
         @apply mt-1;
     }
 
-    article p {
+    .article-link article p {
         @apply first-letter:uppercase;
         @apply tracking-tighter;
     }
 
-    article p::after {
+    .article-link article p::after {
         content: "...";
-    }
-
-    article a {
-        @apply text-lg;
-        @apply font-bold;
-        @apply block;
-        @apply mb-1.5;
     }
 
     .hero-heading {
