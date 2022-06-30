@@ -19,7 +19,7 @@ const ArticleCard: React.FC<ArticleCardProps> = ({
         <a className={'article-link'} aria-label={`Read about ${title.toLowerCase()}`}>
             <article className={clsx('article', 'card')}>
                 <h2>{ title }</h2>
-
+                
                 <p>
                     { description }
                 </p>

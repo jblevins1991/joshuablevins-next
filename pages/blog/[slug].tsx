@@ -103,6 +103,9 @@ export async function getStaticProps(context: any) {
     const s = `
     `
 
+    /**
+     * Fetch details for specific blog post by the slug of the page.
+     */
     const post = await client.fetch(
         `
         *[_type == "post" && slug.current == "${slug}"]{

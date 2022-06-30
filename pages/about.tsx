@@ -55,6 +55,16 @@ const AboutPage = () => {
                     </p>
 
                     <p>
+                        I have been on a large variety of projects throughout my career. This
+                        includes greenfield web applications, matured web applications, node.js
+                        module libraries, and full-stack projects. I have had the pleasure of
+                        taking responsibility and ownership of entire features during this time,
+                        including analytics data layer implementation, performance testing and
+                        monitoring, search-engine optimization, web accessibility, and business
+                        logic.
+                    </p>
+
+                    <p>
                         {/* eslint-disable-next-line react/no-unescaped-entities */}
                         This blog's <Link href={'https://github.com/jblevins1991/joshuablevins-next'}><a rel={'nofollow'} target={'_blank'}>frontend</a></Link>
                         and <Link href={''}><a rel={'nofollow'} target={'_blank'}>backend</a></Link> code is open-source under the GPT-3 license.
