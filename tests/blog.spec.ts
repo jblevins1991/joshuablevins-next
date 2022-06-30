@@ -30,8 +30,7 @@ test.describe('Blog without page param', () => {
     });
 
     test('should render a blog article', async ({ page }) => {
-        const firstArticle = await page.locator('article').first();
-        const firstBlogLink = await firstArticle.locator('a');
+        const firstBlogLink = await page.locator('main a').first();
         const firstBlogLinkURL = await firstBlogLink.getAttribute('href');
 
         await firstBlogLink.click();
