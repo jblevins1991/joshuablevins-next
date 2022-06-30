@@ -9,7 +9,7 @@ import {firstParagraphToExcerpt} from "../utils/firstParagraphToExcerpt";
 const IndexPage = ({ posts }: any) => {
   return <PageTemplate
     description={'Joshua Blevins - Veteran react developer based out of Michigan with special interests in web accessibility, user experience, and best practices.'}
-    title={'Joshua Blevins, veteran React developer'}
+    title={'Veteran React Developer - Joshua Blevins'}
     canonicalUrl={String(process.env.NEXT_HOSTNAME)}
   >
     <main>

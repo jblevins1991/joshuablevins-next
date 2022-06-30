@@ -6,7 +6,7 @@ const NotFoundPage = () => {
   return (
       <PageTemplate
           description={''}
-          title={'404 - Not Found'}
+          title={'Content Not Found - Joshua Blevins'}
           canonicalUrl={`${process.env.NEXT_HOSTNAME}/not-found`}
       >
         <main>

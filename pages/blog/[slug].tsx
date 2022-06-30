@@ -46,7 +46,7 @@ const PostPage = ({ post }: any) => {
     };
 
     return <Page
-        title={post?.relatedUrl?.meta.title || post.title}
+        title={`${post?.relatedUrl?.meta.title || post.title} - Joshua Blevins`}
         description={post?.relatedUrl?.meta.description || ''}
         canonicalUrl={post?.relatedUrl?.url || ''}
     >

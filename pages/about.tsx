@@ -5,7 +5,7 @@ import Link from "next/link";
 const AboutPage = () => {
     return <PageTemplate
         description={'Learn about what makes Joshua Blevins tick professionally.'}
-        title={"About Joshua Blevins"}
+        title={"About Me - Joshua Blevins"}
         canonicalUrl={`${process.env.NEXT_HOSTNAME}/about`}
     >
         <main>
