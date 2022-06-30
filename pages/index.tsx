@@ -8,15 +8,16 @@ import {firstParagraphToExcerpt} from "../utils/firstParagraphToExcerpt";
 
 const IndexPage = ({ posts }: any) => {
   return <PageTemplate
-    description={'Joshua Blevins - veteran react developer with special interests in web accessibility, user experience, and clean coding practices.'}
-    title={'Home'}
+    description={'Joshua Blevins - Veteran react developer based out of Michigan with special interests in web accessibility, user experience, and best practices.'}
+    title={'Joshua Blevins, veteran React developer'}
+    canonicalUrl={String(process.env.NEXT_HOSTNAME)}
   >
     <main>
       <section>
         <h1 className={'hero-heading'}>Joshua Blevins</h1>
 
         <p className={'hero-description'}>
-          Veteran React developer with special interests in web accessibility,
+          Veteran React developer based out of Michigan with special interests in web accessibility,
           user experience, and clean coding practices.
         </p>
       </section>
@@ -27,12 +28,12 @@ const IndexPage = ({ posts }: any) => {
         <div className={'home-articles'}>
         {
           posts && posts.map((post: any) => {
-              const excerpt = firstParagraphToExcerpt(post.body[0].children[0].text);
+              // const excerpt = firstParagraphToExcerpt(post.body[0].children[0].text);
 
               return <ArticleCard
                   key={post.title}
                   title={post.title}
-                  description={excerpt}
+                  description={post?.body?.[0]?.children[0].text || ''}
                   slug={post.slug.current}
               />;
             })
@@ -52,7 +53,7 @@ const IndexPage = ({ posts }: any) => {
 
 export async function getStaticProps(context: any) {
   const posts = await client.fetch(
-      `*[_type == "post"]`
+      `*[_type == "post"][0...3]`
   );
 
   return {
