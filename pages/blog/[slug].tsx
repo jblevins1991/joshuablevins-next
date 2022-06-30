@@ -1,9 +1,10 @@
 import * as React from 'react';
 import PortableText from "react-portable-text";
+import Image from "next/image";
+import Link from "next/link";
 
 import Page from "../../templates/Page";
 import client from "../../client";
-import Image from "next/image";
 
 const PostPage = ({ post }: any) => {
     if (!post) {
@@ -18,12 +19,26 @@ const PostPage = ({ post }: any) => {
         h5: ({children}: any) => <h5>{children}</h5>,
         h6: ({children}: any) => <h6>{children}</h6>,
         del: ({children}: any) => <del>{children}</del>,
-        link: ({children, href}: any) => <a href={href}>{children}</a>,
+        link: ({children, href}: any) => {
+            const hasNoFollow = href.startsWith('http', 0);
+
+            return <Link href={href}>
+                <a
+                    {...(hasNoFollow && {
+                        target: '_blank',
+                        rel: 'nofollow'
+                    })}
+                >
+                    { children }
+                </a>
+            </Link>;
+        },
         normal: ({children}: any) => <p>{children}</p>,
         small: ({children}: any) => <small>{children}</small>,
         code: ({children}: any) => <code>{children}</code>,
         img: ({alt, src}: any) => <figure>
-            <img alt={alt} src={src} />
+            <Image alt={alt} src={src} />
+
             <figcaption>
                 {alt}
             </figcaption>
