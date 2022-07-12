@@ -1,11 +1,12 @@
 import * as React from 'react';
 import {useRouter} from "next/router";
 import Link from "next/link";
+import { dehydrate, QueryClient, useQuery } from 'react-query';
 
 import Page from "../../templates/Page";
 import ArticleCard from "../../components/ArticleCard";
-import client from "../../client";
-import {firstParagraphToExcerpt} from "../../utils/firstParagraphToExcerpt";
+
+import { getAllPosts } from '../../queries';
 
 
 /**
@@ -20,13 +21,17 @@ function paginatePosts(
     pageNo: number,
     itemsPerPage: number
 ) {
+    // the index of the first post on the page
     const paginationStart = (pageNo - 1) * itemsPerPage;
+
+    // the index of the last post on the page
     const paginationEnd = paginationStart + itemsPerPage;
 
+    // slice the posts from sanity with the start and end indices
     const paginatedPosts = posts.slice(
         paginationStart,
         paginationEnd
-    )
+    );
 
     return paginatedPosts;
 }
@@ -36,6 +41,15 @@ const POSTS_PER_PAGE = 3;
 
 const BlogIndexPage = ({ posts }: any) => {
     const { query } = useRouter();
+
+    const {
+        data: fetchedPosts,
+        isError,
+        isLoading
+    } = useQuery(
+        ['getPostsForBlogPage'],
+        getAllPosts
+    );
 
     /**
      * Memoized the pageIndex as it depends on the router's query object.
@@ -47,22 +61,7 @@ const BlogIndexPage = ({ posts }: any) => {
         return !!query.page && Number(query.page) > 0
             ? Number(query.page)
             : 1
-    }, [
-        query.page
-    ]);
-
-    /**
-     * Memoized the paginated posts so that they only re-calculate when the
-     * pageIndex state variable changes.
-     *
-     * This state variable only changes when the `Next Posts` or `Prev Posts`
-     * link is clicked.
-     */
-    const paginatedPosts = React.useMemo(() => {
-        return paginatePosts(posts, pageIndex, POSTS_PER_PAGE);
-    }, [
-        pageIndex
-    ]);
+    }, [ query.page ]);
 
     /**
      * Memoized totalPages with an empty dependency array to only calculate
@@ -71,9 +70,9 @@ const BlogIndexPage = ({ posts }: any) => {
      * This is to reduce the amount of calculations per re-render and leave
      * room for implementation of dynamic postsPerPage feature.
      */
-    const totalPages = React.useMemo(() => {
-        return Math.round(posts.length / POSTS_PER_PAGE);
-    }, []);
+    const totalPages = Math.round(fetchedPosts.length / POSTS_PER_PAGE);
+
+    const paginatedPosts = paginatePosts(fetchedPosts, pageIndex, POSTS_PER_PAGE);
 
     return <Page
         description={'Articles about React, application development, and happiness advice in the tech industry.'}
@@ -83,6 +82,12 @@ const BlogIndexPage = ({ posts }: any) => {
         <main>
             <h1>Blog</h1>
 
+            {
+                isLoading && <>LOADING</>
+            }
+            {
+                isError && <>ERROR</>
+            }
             {
                 paginatedPosts.map((post: any) => {
                     return <ArticleCard
@@ -108,35 +113,15 @@ const BlogIndexPage = ({ posts }: any) => {
 };
 
 export async function getStaticProps(context: any) {
-    /**
-     Fetch details for all blog posts and their categories with count.
-     */
-    const posts = await client.fetch(
-        `*[_type == "post"]{relatedUrl,
-            slug,
-            title,
-            "thumbnail": mainImage.asset->{
-                extension,
-                metadata,
-                mimeType,
-                url,
-                sha1hash,
-            },
-            _createdAt,
-            publishedAt,
-            _updatedAt,
-            categories[]->{
-                _id,
-                title,
-                "count": count(*[_type == "post" && ^.title in categories[]->title])
-            },
-            body
-        }`
+    const queryClient = new QueryClient();
+    await queryClient.prefetchQuery(
+        'getPostsForBlogPage',
+        getAllPosts
     );
 
     return {
         props: {
-            posts: posts || [],
+            dehydratedState: dehydrate(queryClient)
         }
     }
 }
