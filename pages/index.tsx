@@ -1,12 +1,25 @@
 import * as React from "react";
 import Link from 'next/link';
+import { useQuery } from "react-query";
 
 import ArticleCard from "../components/ArticleCard";
 import PageTemplate from "../templates/Page";
-import client from "../client";
-import {firstParagraphToExcerpt} from "../utils/firstParagraphToExcerpt";
+
+import { getPosts } from "../queries";
 
 const IndexPage = ({ posts }: any) => {
+  const postsPerPage = 3;
+
+  const {
+    data: fetchedPosts,
+    isError,
+    isLoading
+  } = useQuery(
+    ['getPostsForHomePage', postsPerPage],
+    getPosts,
+    { initialData: posts }
+  );
+  
   return <PageTemplate
     description={'Joshua Blevins - Veteran react developer based out of Michigan with special interests in web accessibility, user experience, and best practices.'}
     title={'Veteran React Developer - Joshua Blevins'}
@@ -26,18 +39,25 @@ const IndexPage = ({ posts }: any) => {
         <h2>Blog</h2>
 
         <div className={'home-articles'}>
-        {
-          posts && posts.map((post: any) => {
-              // const excerpt = firstParagraphToExcerpt(post.body[0].children[0].text);
-
-              return <ArticleCard
-                  key={post.title}
-                  title={post.title}
-                  description={post?.body?.[0]?.children[0].text || ''}
-                  slug={post.slug.current}
-              />;
-            })
-        }
+          {
+            isLoading && <>LOADING</>
+          }
+          {
+            isError && <>ERROR</>
+          }
+          {
+            fetchedPosts &&
+            !isError &&
+            !isLoading &&
+            fetchedPosts.map((post: any) => {
+                return <ArticleCard
+                    key={post.title}
+                    title={post.title}
+                    description={post?.body?.[0]?.children[0].text || ''}
+                    slug={post.slug.current}
+                />;
+              })
+          }
         </div>
 
         <Link
@@ -52,15 +72,13 @@ const IndexPage = ({ posts }: any) => {
 };
 
 export async function getStaticProps(context: any) {
-  const posts = await client.fetch(
-      `*[_type == "post"][0...3]`
-  );
+    const posts = await getPosts();
 
-  return {
-    props: {
-      posts: posts || []
+    return {
+        props: {
+            posts: posts || [],
+        }
     }
-  }
 }
 
 export default IndexPage

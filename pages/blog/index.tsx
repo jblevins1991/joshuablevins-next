@@ -1,11 +1,12 @@
 import * as React from 'react';
 import {useRouter} from "next/router";
 import Link from "next/link";
+import { useQuery } from 'react-query';
 
 import Page from "../../templates/Page";
 import ArticleCard from "../../components/ArticleCard";
-import client from "../../client";
-import {firstParagraphToExcerpt} from "../../utils/firstParagraphToExcerpt";
+
+import { getAllPosts } from '../../queries';
 
 
 /**
@@ -37,6 +38,16 @@ const POSTS_PER_PAGE = 3;
 const BlogIndexPage = ({ posts }: any) => {
     const { query } = useRouter();
 
+    const {
+        data: fetchedPosts,
+        isError,
+        isLoading
+    } = useQuery(
+        ['getPostsForBlogPage'],
+        getAllPosts,
+        { initialData: posts }
+    );
+
     /**
      * Memoized the pageIndex as it depends on the router's query object.
      *
@@ -52,19 +63,6 @@ const BlogIndexPage = ({ posts }: any) => {
     ]);
 
     /**
-     * Memoized the paginated posts so that they only re-calculate when the
-     * pageIndex state variable changes.
-     *
-     * This state variable only changes when the `Next Posts` or `Prev Posts`
-     * link is clicked.
-     */
-    const paginatedPosts = React.useMemo(() => {
-        return paginatePosts(posts, pageIndex, POSTS_PER_PAGE);
-    }, [
-        pageIndex
-    ]);
-
-    /**
      * Memoized totalPages with an empty dependency array to only calculate
      * on the first render and not subsequent renders.
      *
@@ -75,6 +73,8 @@ const BlogIndexPage = ({ posts }: any) => {
         return Math.round(posts.length / POSTS_PER_PAGE);
     }, []);
 
+    const paginatedPosts = paginatePosts(fetchedPosts, pageIndex, POSTS_PER_PAGE);
+
     return <Page
         description={'Articles about React, application development, and happiness advice in the tech industry.'}
         title={'Web Development Blog - Joshua Blevins'}
@@ -83,6 +83,12 @@ const BlogIndexPage = ({ posts }: any) => {
         <main>
             <h1>Blog</h1>
 
+            {
+                isLoading && <>LOADING</>
+            }
+            {
+                isError && <>ERROR</>
+            }
             {
                 paginatedPosts.map((post: any) => {
                     return <ArticleCard
@@ -108,31 +114,9 @@ const BlogIndexPage = ({ posts }: any) => {
 };
 
 export async function getStaticProps(context: any) {
-    /**
-     Fetch details for all blog posts and their categories with count.
-     */
-    const posts = await client.fetch(
-        `*[_type == "post"]{relatedUrl,
-            slug,
-            title,
-            "thumbnail": mainImage.asset->{
-                extension,
-                metadata,
-                mimeType,
-                url,
-                sha1hash,
-            },
-            _createdAt,
-            publishedAt,
-            _updatedAt,
-            categories[]->{
-                _id,
-                title,
-                "count": count(*[_type == "post" && ^.title in categories[]->title])
-            },
-            body
-        }`
-    );
+    const posts = await getAllPosts();
+
+    console.log(posts);
 
     return {
         props: {
