@@ -1,6 +1,6 @@
 import * as React from "react";
 import Link from 'next/link';
-import { useQuery } from "react-query";
+import { dehydrate, QueryClient, useQuery } from "react-query";
 
 import ArticleCard from "../components/ArticleCard";
 import PageTemplate from "../templates/Page";
@@ -16,8 +16,7 @@ const IndexPage = ({ posts }: any) => {
     isLoading
   } = useQuery(
     ['getPostsForHomePage', postsPerPage],
-    getPosts,
-    { initialData: posts }
+    getPosts
   );
   
   return <PageTemplate
@@ -72,13 +71,17 @@ const IndexPage = ({ posts }: any) => {
 };
 
 export async function getStaticProps(context: any) {
-    const posts = await getPosts();
+  const queryClient = new QueryClient();
+  await queryClient.prefetchQuery(
+      'getPostsForBlogPage',
+      getPosts
+  );
 
-    return {
-        props: {
-            posts: posts || [],
-        }
-    }
+  return {
+      props: {
+          dehydratedState: dehydrate(queryClient)
+      }
+  }
 }
 
 export default IndexPage
