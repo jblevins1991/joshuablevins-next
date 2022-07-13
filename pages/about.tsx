@@ -1,6 +1,12 @@
 import * as React from 'react';
 import PageTemplate from "../templates/Page";
 import Link from "next/link";
+import {
+  Image,
+  ListItem,
+  Typography,
+  UnorderedList
+} from "styless-react";
 
 const AboutPage = () => {
     return <PageTemplate
@@ -56,8 +62,7 @@ const AboutPage = () => {
 
                     <p>
                         {/* eslint-disable-next-line react/no-unescaped-entities */}
-                        This blog's <Link href={'https://github.com/jblevins1991/joshuablevins-next'}><a rel={'nofollow'} target={'_blank'}>frontend</a></Link>
-                        and <Link href={''}><a rel={'nofollow'} target={'_blank'}>backend</a></Link> code is open-source under the GPT-3 license.
+                        This blog's <Link href={'https://github.com/jblevins1991/joshuablevins-next'}><a rel={'nofollow'} target={'_blank'}>frontend</a></Link> code is open-source under the MIT license.
                     </p>
                 </main>
 
@@ -92,13 +97,6 @@ const AboutPage = () => {
                     </ul>
                 </aside>
             </div>
-
-            {/*  @todo: add helpful links (github, acloudguru, linkedin, etc.)  */}
-            <button onClick={() => {
-                throw new Error("Sentry Frontend Error")
-            }}>
-                Throw error
-            </button>
         </main>
     </PageTemplate>;
 }

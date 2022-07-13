@@ -19,7 +19,8 @@
     "react-dom": "18.2.0",
     "react-portable-text": "^0.4.3",
     "react-query": "^3.39.1",
-    "react-spring": "^9.4.5"
+    "react-spring": "^9.4.5",
+    "styless-react": "^0.0.3"
   },
   "devDependencies": {
     "@playwright/test": "^1.22.2",
