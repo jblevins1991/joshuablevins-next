@@ -2,6 +2,11 @@ import * as React from 'react';
 import PortableText from "react-portable-text";
 import Image from "next/image";
 import Link from "next/link";
+import {
+  ListItem,
+  Typography,
+  UnorderedList
+} from "styless-react";
 
 import Page from "../../templates/Page";
 import client from "../../client";
@@ -12,14 +17,15 @@ const PostPage = ({ post }: any) => {
     }
 
     const serializers = {
-        h1: ({children}: any) => <h1>{children}</h1>,
-        h2: ({children}: any) => <h2>{children}</h2>,
-        h3: ({children}: any) => <h3>{children}</h3>,
-        h4: ({children}: any) => <h4>{children}</h4>,
-        h5: ({children}: any) => <h5>{children}</h5>,
-        h6: ({children}: any) => <h6>{children}</h6>,
+        h1: ({children}: any) => <Typography variant='h1'>{children}</Typography>,
+        h2: ({children}: any) => <Typography variant='h2'>{children}</Typography>,
+        h3: ({children}: any) => <Typography variant='h3'>{children}</Typography>,
+        h4: ({children}: any) => <Typography variant='h4'>{children}</Typography>,
+        h5: ({children}: any) => <Typography variant='h5'>{children}</Typography>,
+        h6: ({children}: any) => <Typography variant='h6'>{children}</Typography>,
         del: ({children}: any) => <del>{children}</del>,
         link: ({children, href}: any) => {
+            // @todo: adopt a better way to handle no follow links
             const hasNoFollow = href.startsWith('http', 0);
 
             return <Link href={href}>
@@ -33,7 +39,7 @@ const PostPage = ({ post }: any) => {
                 </a>
             </Link>;
         },
-        normal: ({children}: any) => <p>{children}</p>,
+        normal: ({children}: any) => <Typography>{children}</Typography>,
         small: ({children}: any) => <small>{children}</small>,
         code: ({children}: any) => <code>{children}</code>,
         img: ({alt, src}: any) => <figure>
