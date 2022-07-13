@@ -1,12 +1,13 @@
 import * as React from 'react';
+import {useRouter} from "next/router";
 import Link from "next/link";
+import { dehydrate, QueryClient, useQuery } from 'react-query';
 
 import Page from "../../templates/Page";
 import ArticleCard from "../../components/ArticleCard";
-import {firstParagraphToExcerpt} from "../../utils/firstParagraphToExcerpt";
 
-import client from "../../client";
-import {useRouter} from "next/router";
+import { getAllPosts } from '../../queries';
+
 
 /**
  * 1-based pagination that slices the currently desired posts from the array of posts.
@@ -20,54 +21,79 @@ function paginatePosts(
     pageNo: number,
     itemsPerPage: number
 ) {
+    // the index of the first post on the page
     const paginationStart = (pageNo - 1) * itemsPerPage;
+
+    // the index of the last post on the page
     const paginationEnd = paginationStart + itemsPerPage;
 
+    // slice the posts from sanity with the start and end indices
     const paginatedPosts = posts.slice(
         paginationStart,
         paginationEnd
-    )
+    );
 
     return paginatedPosts;
 }
 
-// POSTS_PER_PAGE constant controlls how many posts each page will render
+// POSTS_PER_PAGE constant controls how many posts each page will render
 const POSTS_PER_PAGE = 3;
 
 const BlogIndexPage = ({ posts }: any) => {
     const { query } = useRouter();
 
-    const pageIndex = !!query.page && Number(query.page) > 0
-        ? Number(query.page)
-        : 1;
+    const {
+        data: fetchedPosts,
+        isError,
+        isLoading
+    } = useQuery(
+        ['getPostsForBlogPage'],
+        getAllPosts
+    );
 
-    const paginatedPosts = React.useMemo(() => {
-        return paginatePosts(posts, pageIndex, POSTS_PER_PAGE);
-    }, [
-        pageIndex
-    ]);
+    /**
+     * Memoized the pageIndex as it depends on the router's query object.
+     *
+     * This helps reduce unnecessary re-calculation of the user's current
+     * page. It only changes when query.page is changed.
+     */
+    const pageIndex = React.useMemo(() => {
+        return !!query.page && Number(query.page) > 0
+            ? Number(query.page)
+            : 1
+    }, [ query.page ]);
 
-    React.useEffect(() => {
-        console.log('page index: ', pageIndex);
-    }, [pageIndex]);
+    /**
+     * Memoized totalPages with an empty dependency array to only calculate
+     * on the first render and not subsequent renders.
+     *
+     * This is to reduce the amount of calculations per re-render and leave
+     * room for implementation of dynamic postsPerPage feature.
+     */
+    const totalPages = Math.round(fetchedPosts.length / POSTS_PER_PAGE);
 
-    const totalPages = Math.round(posts.length / POSTS_PER_PAGE);
+    const paginatedPosts = paginatePosts(fetchedPosts, pageIndex, POSTS_PER_PAGE);
 
     return <Page
-        description={'Articles about React and application development.'}
-        title={'Blog'}
+        description={'Articles about React, application development, and happiness advice in the tech industry.'}
+        title={'Web Development Blog - Joshua Blevins'}
+        canonicalUrl={`${process.env.NEXT_HOSTNAME}/blog`}
     >
         <main>
             <h1>Blog</h1>
 
             {
+                isLoading && <>LOADING</>
+            }
+            {
+                isError && <>ERROR</>
+            }
+            {
                 paginatedPosts.map((post: any) => {
-                    const excerpt = firstParagraphToExcerpt(post?.body?.[0]?.children[0].text || '');
-
                     return <ArticleCard
                         key={post.title}
                         title={post.title}
-                        description={excerpt}
+                        description={post?.body?.[0]?.children[0].text || ''}
                         slug={post.slug.current}
                     />;
                 })
@@ -87,13 +113,15 @@ const BlogIndexPage = ({ posts }: any) => {
 };
 
 export async function getStaticProps(context: any) {
-    const posts = await client.fetch(
-        `*[_type == "post"]`
+    const queryClient = new QueryClient();
+    await queryClient.prefetchQuery(
+        'getPostsForBlogPage',
+        getAllPosts
     );
 
     return {
         props: {
-            posts: posts || []
+            dehydratedState: dehydrate(queryClient)
         }
     }
 }
