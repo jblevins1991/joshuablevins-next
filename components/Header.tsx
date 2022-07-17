@@ -16,7 +16,7 @@ export interface NavigationItem {
     uri: string;
 }
 
-const Header: React.FC<HeaderProps> = ({
+export const Header: React.FC<HeaderProps> = ({
     isDrawerOpen,
     navItems,
     setIsDrawerOpen,
@@ -64,5 +64,3 @@ const Header: React.FC<HeaderProps> = ({
         </Button>
     </header>
 };
-
-export default Header;

@@ -12,7 +12,7 @@ export interface DrawerProps {
     open: boolean;
 }
 
-const Drawer: React.FC<DrawerProps> = ({
+export const Drawer: React.FC<DrawerProps> = ({
     navItems,
     setOpen,
     open,
@@ -47,5 +47,3 @@ const Drawer: React.FC<DrawerProps> = ({
         </UnorderedList>
     </nav>;
 };
-
-export default Drawer;

@@ -1,12 +1,14 @@
 import * as React from 'react';
-import PortableText from "react-portable-text";
-import Image from "next/image";
+
+import Image from 'next/image';
 import Link from "next/link";
+import PortableText from 'react-portable-text';
+
 import {
     Card,
-  ListItem,
-  Typography,
-  UnorderedList
+    ListItem,
+    Typography,
+    UnorderedList
 } from "styless-react";
 
 import Page from "../../templates/Page";
@@ -26,6 +28,23 @@ const PostPage = ({ post }: any) => {
         h5: ({children}: any) => <Typography variant='h5'>{children}</Typography>,
         h6: ({children}: any) => <Typography variant='h6'>{children}</Typography>,
         del: ({children}: any) => <del>{children}</del>,
+        image: ({ asset }: any) => {
+            return <>
+                {asset && <figure>
+                    <Image
+                        alt={''}
+                        className='blog-image'
+                        height={asset?.metadata.dimensions.height || 0}
+                        src={asset?.url || ''}
+                        width={asset?.metadata.dimensions.width || 0}
+                    />
+
+                    <figcaption className='blog-image-caption'>
+                        {''}
+                    </figcaption>
+                </figure>}
+            </>
+        },
         link: ({children, href}: any) => {
             // @todo: adopt a better way to handle no follow links
             const hasNoFollow = href.startsWith('http', 0);
