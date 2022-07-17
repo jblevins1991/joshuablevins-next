@@ -39,7 +39,7 @@ function paginatePosts(
 // POSTS_PER_PAGE constant controls how many posts each page will render
 const POSTS_PER_PAGE = 3;
 
-const BlogIndexPage = ({ posts }: any) => {
+const BlogIndexPage = () => {
     const { query } = useRouter();
 
     const {
@@ -114,6 +114,9 @@ const BlogIndexPage = ({ posts }: any) => {
 
 export async function getStaticProps(context: any) {
     const queryClient = new QueryClient();
+
+    console.log('getting')
+    
     await queryClient.prefetchQuery(
         'getPostsForBlogPage',
         getAllPosts

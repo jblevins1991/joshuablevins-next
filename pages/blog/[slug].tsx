@@ -3,6 +3,7 @@ import PortableText from "react-portable-text";
 import Image from "next/image";
 import Link from "next/link";
 import {
+    Card,
   ListItem,
   Typography,
   UnorderedList
@@ -10,6 +11,7 @@ import {
 
 import Page from "../../templates/Page";
 import client from "../../client";
+import { format } from 'date-fns';
 
 const PostPage = ({ post }: any) => {
     if (!post) {
@@ -42,13 +44,6 @@ const PostPage = ({ post }: any) => {
         normal: ({children}: any) => <Typography>{children}</Typography>,
         small: ({children}: any) => <small>{children}</small>,
         code: ({children}: any) => <code>{children}</code>,
-        img: ({alt, src}: any) => <figure>
-            <Image alt={alt} src={src} />
-
-            <figcaption>
-                {alt}
-            </figcaption>
-        </figure>,
     };
 
     return <Page
@@ -57,10 +52,10 @@ const PostPage = ({ post }: any) => {
         canonicalUrl={post?.relatedUrl?.url || ''}
     >
         <main>
-            <h1>{ post.title }</h1>
+            <Typography variant='h1'>{ post.title }</Typography>
 
             {!!post.author && post.publishedAt && <small>
-                Published by {post.author.name}, on {post.publishedAt}.
+                Published by {post.author.name}, on {format(new Date(post.publishedAt), 'PP')}.
             </small>}
 
             {!!post.thumbnail && <figure>
@@ -80,14 +75,14 @@ const PostPage = ({ post }: any) => {
                 serializers={serializers}
             />}
 
-            {post.author && <section>
-                <h2>{post.author.name}</h2>
+            {post.author && <Card className='author'>
+                <Typography variant='h2'>{post.author.name}</Typography>
 
                 {post.author.bio && <PortableText
                     content={post.author.bio}
                     serializers={serializers}
                 />}
-            </section>}
+            </Card>}
         </main>
     </Page>;
 };
@@ -136,7 +131,13 @@ export async function getStaticProps(context: any) {
             categories[]->{
               title
             },
-            body
+            body[]{
+                ...,
+                asset->{
+                    ...,
+                    "_key": _id
+                }
+            }
         }`
     );
 
