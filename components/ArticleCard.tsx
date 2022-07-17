@@ -1,6 +1,7 @@
 import * as React from 'react';
 import clsx from "clsx";
 import Link from 'next/link';
+import { Typography } from 'styless-react';
 
 export interface ArticleCardProps {
     title: string;
@@ -18,11 +19,11 @@ const ArticleCard: React.FC<ArticleCardProps> = ({
     >
         <a className={'article-link'} aria-label={`Read about ${title.toLowerCase()}`}>
             <article className={clsx('article', 'card')}>
-                <h2>{ title }</h2>
+                <Typography variant='h2'>{ title }</Typography>
                 
-                <p>
+                <Typography>
                     { description }
-                </p>
+                </Typography>
             </article>
         </a>
     </Link>;

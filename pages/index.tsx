@@ -1,9 +1,9 @@
 import * as React from "react";
 import Link from 'next/link';
 import { dehydrate, QueryClient, useQuery } from "react-query";
-// import {
-//   Typography
-// } from "styless-react";
+import {
+  Typography
+} from "styless-react";
 
 import ArticleCard from "../components/ArticleCard";
 import PageTemplate from "../templates/Page";
@@ -31,10 +31,10 @@ const IndexPage = ({ posts }: any) => {
       <section>
         <h1 className={'hero-heading'}>Joshua Blevins</h1>
 
-        <p className={'hero-description'}>
+        <Typography className={'hero-description'}>
           Veteran React developer based out of Michigan with special interests in web accessibility,
           user experience, and clean coding practices.
-        </p>
+        </Typography>
       </section>
 
       <section className={'home-blog'}>
@@ -49,8 +49,6 @@ const IndexPage = ({ posts }: any) => {
           }
           {
             fetchedPosts &&
-            !isError &&
-            !isLoading &&
             fetchedPosts.map((post: any) => {
                 return <ArticleCard
                     key={post.title}
@@ -62,11 +60,10 @@ const IndexPage = ({ posts }: any) => {
           }
         </div>
 
-        <Link
-            aria-label={'Navigate to my blog.'}
-            href={'/blog'}
-        >
-          view all
+        <Link href={'/blog'}>
+          <a aria-label={'Navigate to my blog.'} href={'/blog'}>
+            view all
+          </a>
         </Link>
       </section>
     </main>

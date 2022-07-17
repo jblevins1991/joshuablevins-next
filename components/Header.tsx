@@ -2,6 +2,7 @@ import * as React from 'react';
 import Link from "next/link";
 import Image from 'next/image';
 import {useRouter} from "next/router";
+import { Button, ListItem, UnorderedList } from 'styless-react';
 
 export interface HeaderProps {
     isDrawerOpen: boolean;
@@ -28,14 +29,14 @@ const Header: React.FC<HeaderProps> = ({
         {/*</Link>*/}
 
         <nav className={'desktop-navigation'}>
-            <ul>
+            <UnorderedList>
             {
                 navItems.map(navItem => {
                     const isCurrent = navItem.uri === "/"
                         ? router.pathname === "/"
                         : router.pathname.substring(1).startsWith(navItem.uri.substring(1));
 
-                    return <li
+                    return <ListItem
                         aria-current={isCurrent}
                         aria-label={navItem.a11yLabel}
                         className={'navigation-item'}
@@ -44,23 +45,23 @@ const Header: React.FC<HeaderProps> = ({
                         <Link href={navItem.uri}>
                             { navItem.label }
                         </Link>
-                    </li>;
+                    </ListItem>;
                 })
             }
-            </ul>
+            </UnorderedList>
         </nav>
 
-        <button
+        <Button
             className={'hamburger-button'}
             onClick={setIsDrawerOpen}
         >
             <Image
                 aria-label={'Mobile Navigation Icon'}
                 height={40}
-                src={'/iconmonstr-menu-lined.svg'}
-                width={40}
+                src={'/hamburger.png'}
+                width={44}
             />
-        </button>
+        </Button>
     </header>
 };
 

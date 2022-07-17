@@ -1,9 +1,10 @@
 import * as React from 'react';
-import Link from "next/link";
 import {useRouter} from "next/router";
+import { Button, ListItem, UnorderedList } from 'styless-react';
+import Link from "next/link";
+import Image from "next/image";
 
 import {NavigationItem} from "./Header";
-import Image from "next/image";
 
 export interface DrawerProps {
     navItems: NavigationItem[];
@@ -21,18 +22,18 @@ const Drawer: React.FC<DrawerProps> = ({
     if (!open) return null;
 
     return <nav className={'drawer'}>
-        <button onClick={() => setOpen(false)}>
+        <Button onClick={() => setOpen(false)}>
             <Image
                 aria-label={'Close Mobile Navigation Icon'}
                 height={40}
                 src={'/iconmonstr-x-mark-lined.svg'}
                 width={40}
             />
-        </button>
-        <ul>
+        </Button>
+        <UnorderedList>
         {
             navItems.map(navItem => {
-                return <li
+                return <ListItem
                     aria-current={navItem.uri === location.pathname}
                     className={'navigation-item'}
                     key={navItem.label}
@@ -40,10 +41,10 @@ const Drawer: React.FC<DrawerProps> = ({
                     <Link href={navItem.uri}>
                         { navItem.label }
                     </Link>
-                </li>;
+                </ListItem>;
             })
         }
-        </ul>
+        </UnorderedList>
     </nav>;
 };
 
