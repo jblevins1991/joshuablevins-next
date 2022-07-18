@@ -12,7 +12,7 @@ module.exports = {
             primaryEnabled: '#88c7ff',
             primaryHover: '#aad7ff',
             // secondary color
-            secondaryEnabled: '',
+            secondaryEnabled: '#61b5ff',
             secondaryHover: '',
             // disabled color
             uiCanvasDisabled: '',
