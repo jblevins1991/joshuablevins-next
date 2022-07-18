@@ -9,7 +9,6 @@ const AboutPage = () => {
     return <PageTemplate
         description={'Learn about what makes Joshua Blevins tick professionally.'}
         title={"About Me - Joshua Blevins"}
-        canonicalUrl={`${process.env.NEXT_HOSTNAME}/about`}
     >
         <main>
             <Breadcrumbs />
@@ -94,10 +93,22 @@ const AboutPage = () => {
                         <ListItem>Docker/Compose</ListItem>
                         <ListItem>Kubernetes</ListItem>
                     </UnorderedList>
+
+                    <Typography variant='h2'>
+                        My OSS Projects
+                    </Typography>
+
+                    <UnorderedList>
+                        <ListItem>
+                            <Link href={''}>
+                                Styless React
+                            </Link>
+                        </ListItem>
+                    </UnorderedList>
                 </aside>
             </div>
         </main>
     </PageTemplate>;
-}
+};
 
 export default AboutPage;

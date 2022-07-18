@@ -1,4 +1,6 @@
 import * as React from 'react';
+import { dehydrate, QueryClient, useQuery } from 'react-query';
+import { format } from 'date-fns';
 
 import Image from 'next/image';
 import Link from "next/link";
@@ -12,14 +14,19 @@ import {
 } from "styless-react";
 
 import Page from "../../templates/Page";
-import client from "../../client";
-import { format } from 'date-fns';
-import { Breadcrumbs } from '../../components/Breadcrumbs';
 
-const PostPage = ({ post }: any) => {
-    if (!post) {
-        return null;
-    }
+import { Breadcrumbs } from '../../components/Breadcrumbs';
+import { getPostBySlug } from '../../queries'
+
+const PostPage = ({ slug }: any) => {
+    const {
+        data: post,
+        isLoading,
+        isError
+    } = useQuery(
+        ['getPostBySlug', slug],
+        () => getPostBySlug(slug)
+    );
 
     const serializers = {
         h1: ({children}: any) => <Typography variant='h1'>{children}</Typography>,
@@ -69,11 +76,10 @@ const PostPage = ({ post }: any) => {
     return <Page
         title={`${post?.relatedUrl?.meta.title || post.title} - Joshua Blevins`}
         description={post?.relatedUrl?.meta.description || ''}
-        canonicalUrl={post?.relatedUrl?.url || ''}
     >
         <main>
             <Breadcrumbs />
-            
+
             <Typography variant='h1'>{ post.title }</Typography>
 
             {!!post.author && post.publishedAt && <small>
@@ -109,63 +115,20 @@ const PostPage = ({ post }: any) => {
     </Page>;
 };
 
-export async function getStaticPaths() {
-    const paths = await client.fetch(
-        `*[_type == "post" && defined(slug.current)][].slug.current`
-    );
-
-    return {
-        paths: paths.map((slug: any) => ({params: {slug}})),
-        fallback: true,
-    };
-}
-
-export async function getStaticProps(context: any) {
+export async function getServerSideProps(context: any) {
     const {slug} = context.params;
 
-    const s = `
-    `
-
-    /**
-     * Fetch details for specific blog post by the slug of the page.
-     */
-    const post = await client.fetch(
-        `
-        *[_type == "post" && slug.current == "${slug}"]{
-            relatedUrl,
-            slug,
-            title,
-            "thumbnail": mainImage.asset->{
-                extension,
-                metadata,
-                mimeType,
-                url,
-                sha1hash,
-            },
-            author->{
-                bio[],
-                name,
-                slug
-            },
-            _createdAt,
-            publishedAt,
-            _updatedAt,
-            categories[]->{
-              title
-            },
-            body[]{
-                ...,
-                asset->{
-                    ...,
-                    "_key": _id
-                }
-            }
-        }`
+    const queryClient = new QueryClient();
+    
+    await queryClient.prefetchQuery(
+        ['getPostBySlug', slug],
+        () => getPostBySlug(slug)
     );
 
     return {
         props: {
-            post: post[0] || {}
+            slug,
+            dehydratedState: dehydrate(queryClient)
         }
     };
 }

@@ -78,11 +78,10 @@ const BlogIndexPage = () => {
     return <Page
         description={'Articles about React, application development, and happiness advice in the tech industry.'}
         title={'Web Development Blog - Joshua Blevins'}
-        canonicalUrl={`${process.env.NEXT_HOSTNAME}/blog`}
     >
         <main>
             <Breadcrumbs />
-            
+
             <h1>Blog</h1>
 
             {
@@ -117,8 +116,6 @@ const BlogIndexPage = () => {
 
 export async function getStaticProps(context: any) {
     const queryClient = new QueryClient();
-
-    console.log('getting')
     
     await queryClient.prefetchQuery(
         'getPostsForBlogPage',
@@ -129,7 +126,7 @@ export async function getStaticProps(context: any) {
         props: {
             dehydratedState: dehydrate(queryClient)
         }
-    }
+    };
 }
 
 export default BlogIndexPage;
