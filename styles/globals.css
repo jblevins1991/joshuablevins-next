@@ -40,7 +40,6 @@ body {
     }
 
     main {
-        @apply container;
         @apply mx-auto;
         @apply mb-3;
     }
@@ -51,7 +50,7 @@ body {
 
     aside {
         @apply container;
-        @apply m-0;
+        @apply mb-5;
     }
 
     aside h2 {
@@ -89,10 +88,22 @@ body {
         @apply outline-textOnPrimary;
     }
 
+    .content-wrapper {
+        @apply container;
+        @apply flex;
+        @apply flex-col;
+    }
+
     @media screen and (min-width: 1024px) {
+        .content-wrapper {
+            @apply mx-auto;
+        }
+        
         .root-container {
+            @apply container;
             @apply flex;
             @apply flex-row;
+            @apply mx-auto;
         }
 
         main {
