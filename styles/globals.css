@@ -1,9 +1,19 @@
 body {
     position: relative;
-    box-sizing: border-box;
+    box-sizing: content-box;
     width: 100vw;
-    height: 100vh;
+    min-height: 100vh;
+    height: auto;
     background-color: #001324;
+}
+
+#__next {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 100vw;
+    min-height: 100vh;
+    height: auto;
 }
 
 /**
@@ -32,11 +42,51 @@ body {
     main {
         @apply container;
         @apply mx-auto;
-        @apply mb-5;
+        @apply mb-3;
+    }
+
+    main section {
+        @apply w-full;
+    }
+
+    aside {
+        @apply container;
+        @apply m-0;
     }
 
     aside h2 {
         @apply mt-4;
+    }
+
+    footer {
+        @apply bg-secondaryEnabled;
+        @apply flex;
+        @apply flex-col;
+        @apply justify-around;
+        @apply min-h-[200px];
+        @apply h-auto;
+    }
+
+    footer section {
+        @apply flex-1;
+        @apply p-2;
+    }
+
+    footer section h2 {
+        @apply text-textOnPrimary;
+    }
+
+    footer section ul li a {
+        @apply text-textOnPrimary;
+    }
+
+    footer section ul li a:hover {
+        @apply underline;
+        @apply text-textOnPrimary;
+    }
+
+    footer section ul li a:focus {
+        @apply outline-textOnPrimary;
     }
 
     @media screen and (min-width: 1024px) {
@@ -45,17 +95,24 @@ body {
             @apply flex-row;
         }
 
-        .blog-root-container + aside,
-        main + aside {
+        main {
             @apply w-2/3;
+            @apply mx-auto;
+            @apply mb-5;
         }
 
         aside {
             @apply w-1/3;
+            @apply mx-auto;
+            @apply mb-5;
         }
 
         aside h2 {
             @apply mt-4;
+        }
+
+        footer {
+            @apply flex-row;
         }
     }
 
@@ -274,12 +331,17 @@ body {
     }
 
     .article-link {
-        @apply flex-1;
-        @apply box-border;
-        @apply p-2;
+        @apply block;
+        @apply w-full;
+        @apply flex-shrink;
+        @apply flex-grow-0;
     }
 
     .article-link article {
+        box-sizing: border-box;
+        width: calc(100% - 1rem);
+        margin: .5rem;
+
         @apply rounded-lg;
         @apply border;
         @apply bg-uiMaterial;
@@ -331,15 +393,15 @@ body {
     }
 
     .home-blog > a:last-child {
-        @apply box-border;
+        box-sizing: border-box;
+        width: calc(100% - 1rem);
+        margin: .5rem;
+
         @apply block;
-        @apply w-full;
         @apply text-xl;
         @apply font-bold;
         @apply tracking-wide;
         @apply box-border;
-        @apply m-0;
-        @apply mt-2;
         @apply text-center;
         @apply block;
         @apply border-primaryEnabled;
@@ -367,6 +429,13 @@ body {
     .blog-image {
         width: 100%;
         object-fit: contain;
+    }
+
+    .card {
+        @apply box-border;
+        @apply w-full;
+        @apply min-h-fit;
+        @apply h-auto;
     }
 
     .card.author {
