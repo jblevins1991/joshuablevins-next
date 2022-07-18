@@ -14,6 +14,7 @@ import {
 import Page from "../../templates/Page";
 import client from "../../client";
 import { format } from 'date-fns';
+import { Breadcrumbs } from '../../components/Breadcrumbs';
 
 const PostPage = ({ post }: any) => {
     if (!post) {
@@ -71,6 +72,8 @@ const PostPage = ({ post }: any) => {
         canonicalUrl={post?.relatedUrl?.url || ''}
     >
         <main>
+            <Breadcrumbs />
+            
             <Typography variant='h1'>{ post.title }</Typography>
 
             {!!post.author && post.publishedAt && <small>

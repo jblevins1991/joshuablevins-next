@@ -7,6 +7,7 @@ import Page from "../../templates/Page";
 import ArticleCard from "../../components/ArticleCard";
 
 import { getAllPosts } from '../../queries';
+import { Breadcrumbs } from '../../components/Breadcrumbs';
 
 
 /**
@@ -80,6 +81,8 @@ const BlogIndexPage = () => {
         canonicalUrl={`${process.env.NEXT_HOSTNAME}/blog`}
     >
         <main>
+            <Breadcrumbs />
+            
             <h1>Blog</h1>
 
             {

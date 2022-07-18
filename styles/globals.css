@@ -162,6 +162,10 @@ body {
     }
 
     @media screen and (min-width: 641px) {
+        header {
+            @apply pb-2;
+        }
+
         header nav {
             display: initial;
         }
@@ -182,7 +186,6 @@ body {
             @apply border-b-primaryEnabled;
             @apply border-b-2;
             @apply border-solid;
-            @apply pb-2;
         }
 
         header nav ul li a {
@@ -239,15 +242,8 @@ body {
     }
 
     .breadcrumb-wrapper {
-        @apply container;
-        @apply mx-3;
         @apply py-3;
-    }
-
-    @media screen and (min-width: 1024px) {
-        .breadcrumb-wrapper {
-            @apply mx-auto;
-        }
+        @apply px-2;
     }
 
     .breadcrumbs {
@@ -366,6 +362,11 @@ body {
         @apply bg-uiMaterialHover;
         @apply text-primaryHover;
         @apply shadow-xl;
+    }
+
+    .blog-image {
+        width: 100%;
+        object-fit: contain;
     }
 
     .card.author {

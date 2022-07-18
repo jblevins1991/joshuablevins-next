@@ -1,7 +1,9 @@
 import * as React from 'react';
-import PageTemplate from "../templates/Page";
 import Link from "next/link";
 import { Typography, UnorderedList, ListItem } from 'styless-react';
+
+import PageTemplate from "../templates/Page";
+import { Breadcrumbs } from '../components/Breadcrumbs';
 
 const AboutPage = () => {
     return <PageTemplate
@@ -10,6 +12,8 @@ const AboutPage = () => {
         canonicalUrl={`${process.env.NEXT_HOSTNAME}/about`}
     >
         <main>
+            <Breadcrumbs />
+
             <div className={'root-container'}>
                 <main>
                     <Typography variant='h1'>About Me</Typography>
