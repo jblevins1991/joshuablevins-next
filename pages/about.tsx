@@ -1,16 +1,27 @@
 import * as React from 'react';
+import { useQuery } from 'react-query';
 import Link from "next/link";
 import { Typography, UnorderedList, ListItem } from 'styless-react';
 
 import PageTemplate from "../templates/Page";
 import { Breadcrumbs } from '../components/Breadcrumbs';
+import { getAllProjects } from '../queries';
 
 const AboutPage = () => {
+    const {
+        data: projects,
+        isLoading,
+        isError
+    } = useQuery(
+        ['getAllProjects'],
+        getAllProjects
+    );
+
     return <PageTemplate
         description={'Learn about what makes Joshua Blevins tick professionally.'}
         title={"About Me - Joshua Blevins"}
     >
-        <main>
+        <div className='content-wrapper'>
             <Breadcrumbs />
 
             <div className={'root-container'}>
@@ -65,7 +76,30 @@ const AboutPage = () => {
                 </main>
 
                 <aside>
-                    <Typography variant='h2'>Known Technologies</Typography>
+                    <Typography variant='h2'>
+                        My OSS Projects
+                    </Typography>
+
+                    <UnorderedList>
+                        {
+                            projects && projects.map((project: any) => {
+                                const {
+                                    name,
+                                    url
+                                } = project;
+
+                                return <ListItem>
+                                    <Link href={url}>
+                                        { name }
+                                    </Link>
+                                </ListItem>;
+                            })
+                        }
+                    </UnorderedList>
+
+                    <Typography variant='h2'>
+                        Known Technologies
+                    </Typography>
 
                     <UnorderedList>
                         <ListItem>HTML</ListItem>
@@ -93,21 +127,9 @@ const AboutPage = () => {
                         <ListItem>Docker/Compose</ListItem>
                         <ListItem>Kubernetes</ListItem>
                     </UnorderedList>
-
-                    <Typography variant='h2'>
-                        My OSS Projects
-                    </Typography>
-
-                    <UnorderedList>
-                        <ListItem>
-                            <Link href={''}>
-                                Styless React
-                            </Link>
-                        </ListItem>
-                    </UnorderedList>
                 </aside>
             </div>
-        </main>
+        </div>
     </PageTemplate>;
 };
 
