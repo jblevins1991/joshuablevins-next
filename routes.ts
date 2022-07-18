@@ -12,6 +12,11 @@ const routes: NavigationItem[] = [
         uri: '/blog'
     },
     {
+        a11yLabel: 'Navigate to my open-source projects.',
+        label: 'Projects',
+        uri: '/projects'
+    },
+    {
         a11yLabel: 'Navigate to the about me page.',
         label: 'About',
         uri: '/about'
