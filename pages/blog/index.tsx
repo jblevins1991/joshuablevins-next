@@ -1,13 +1,14 @@
 import * as React from 'react';
 import {useRouter} from "next/router";
 import Link from "next/link";
-import { dehydrate, QueryClient, useQuery } from 'react-query';
+import { dehydrate, QueryClient, useQueries, useQuery } from 'react-query';
 
 import Page from "../../templates/Page";
 import ArticleCard from "../../components/ArticleCard";
 
-import { getAllPosts } from '../../queries';
+import { getAllPosts, getCategories } from '../../queries';
 import { Breadcrumbs } from '../../components/Breadcrumbs';
+import { ListItem, Typography, UnorderedList } from 'styless-react';
 
 
 /**
@@ -43,14 +44,10 @@ const POSTS_PER_PAGE = 3;
 const BlogIndexPage = () => {
     const { query } = useRouter();
 
-    const {
-        data: fetchedPosts,
-        isError,
-        isLoading
-    } = useQuery(
-        ['getPostsForBlogPage'],
-        getAllPosts
-    );
+    const [posts, categories] = useQueries([
+        { queryKey: 'getPostsForBlogPage', queryFn: getAllPosts },
+        { queryKey: 'getCategories', queryFn: getCategories }
+    ]);
 
     /**
      * Memoized the pageIndex as it depends on the router's query object.
@@ -71,47 +68,69 @@ const BlogIndexPage = () => {
      * This is to reduce the amount of calculations per re-render and leave
      * room for implementation of dynamic postsPerPage feature.
      */
-    const totalPages = Math.round(fetchedPosts.length / POSTS_PER_PAGE);
+    const totalPages = Math.round(posts?.data.length / POSTS_PER_PAGE);
 
-    const paginatedPosts = paginatePosts(fetchedPosts, pageIndex, POSTS_PER_PAGE);
+    const paginatedPosts = paginatePosts(posts?.data, pageIndex, POSTS_PER_PAGE);
 
     return <Page
         description={'Articles about React, application development, and happiness advice in the tech industry.'}
         title={'Web Development Blog - Joshua Blevins'}
     >
-        <main>
+        
+        <div className='content-wrapper'>
             <Breadcrumbs />
 
-            <h1>Blog</h1>
+            <Typography variant='h1'>
+                Blog
+            </Typography>
 
-            {
-                isLoading && <>LOADING</>
-            }
-            {
-                isError && <>ERROR</>
-            }
-            {
-                paginatedPosts.map((post: any) => {
-                    return <ArticleCard
-                        key={post.title}
-                        title={post.title}
-                        description={post?.body?.[0]?.children[0].text || ''}
-                        slug={post.slug.current}
-                    />;
-                })
-            }
+            <div className={'root-container'}>
+                <main>
+                    <Typography variant='h2'>
+                        Articles
+                    </Typography>
+                    {
+                        paginatedPosts.map((post: any) => {
+                            return <ArticleCard
+                                key={post.title}
+                                title={post.title}
+                                description={post?.body?.[0]?.children[0].text || ''}
+                                slug={post.slug.current}
+                            />;
+                        })
+                    }
 
-            <div>
-                { pageIndex > 1 && <Link href={`/blog?page=${pageIndex - 1}`}>
-                    Previous posts
-                </Link>}
+                    <div>
+                        { pageIndex > 1 && <Link href={`/blog?page=${pageIndex - 1}`}>
+                            Previous posts
+                        </Link>}
 
-                { pageIndex < totalPages && <Link href={`/blog?page=${pageIndex + 1}`}>
-                    Next posts
-                </Link>}
+                        { pageIndex < totalPages && <Link href={`/blog?page=${pageIndex + 1}`}>
+                            Next posts
+                        </Link>}
+                    </div>
+                </main>
+
+                <aside>
+                    <Typography variant='h2'>
+                        Categories
+                    </Typography>
+
+                    <UnorderedList>
+                        {
+                            categories?.data && categories?.data.map((category: any) => {
+                                return <ListItem>
+                                    <Link href={`/blog/category/${category._id}`}>
+                                        { category.title }
+                                    </Link>
+                                </ListItem>
+                            })
+                        }
+                    </UnorderedList>
+                </aside>
             </div>
-        </main>
-    </Page>
+        </div>
+    </Page>;
 };
 
 export async function getStaticProps(context: any) {
@@ -120,6 +139,11 @@ export async function getStaticProps(context: any) {
     await queryClient.prefetchQuery(
         'getPostsForBlogPage',
         getAllPosts
+    );
+
+    await queryClient.prefetchQuery(
+        'getCategories',
+        getCategories
     );
 
     return {
